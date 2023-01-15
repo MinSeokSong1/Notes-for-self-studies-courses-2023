@@ -1,0 +1,160 @@
+\documentclass{article}
+\usepackage[hyphens,spaces,obeyspaces]{url}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\graphicspath{ {./images/} }
+\usetikzlibrary{shapes}
+\usepgfplotslibrary{polar}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{every axis/.append style={
+                    axis x line=middle,    % put the x axis in the middle
+                    axis y line=middle,    % put the y axis in the middle
+                    axis line style={<->,color=blue}, % arrows on the axis
+                    xlabel={$x$},          % default put x on x-axis
+                    ylabel={$y$},          % default put y on y-axis
+            }}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}[example]{Remark}
+
+\title{applied functional analysis}
+\author{MinSeok Song}
+\date{}
+
+\begin{document}
+\maketitle 
+\begin{itemize}
+\item compact operators are the ones well approximated by finite dimensional operators (there is a notion of dimension for operators).
+\item "Hamming distance": $d(x,y)=\verb|#|\{i\mid x_i\neq y_i\}$
+\item Remember that module is just a field replaced by a ring for a vector space.
+\item Intuition of complete is "small"
+\item (Question) what do you mean by $\tilde X$ as set of all classes of equivalence. Might be worth to check!
+\item In metric space, compact iff sequentially compact.
+There is a discussion of why this is so. $https://math.stackexchange.com/questions/44907/whats-going-on-with-compact-implies-sequentially-compact$ Questionz; don't we need to consider "Any" subsequence in the set $\{f_i\}$? I don't understand the product topology on $\{0,1\}^{[0,1]}$
+\item Continuity implies sequential continuity, but not the otherwise. 
+\item Bolzano Weierstrass (bdd sequence has convergent subsequence) for $\mathbb{R}^2$ case can be proved by bisecting a square sequentially and using the completeness of $\mathbb{R}^2$.
+\end{itemize}
+
+\subsection*{Lecture 2}
+\subsection*{Lecture 3}
+
+
+
+\newpage
+\section*{Digression}
+\subsection*{Baire category theorem}
+\begin{definition}
+E is nowhere dense: $(\bar E)^\circ=\phi$, for example a point in $\mathbb{R}^d$ or Cantor set(it is closed set and the closure is itself).
+First category(idea: special) is the countable union of nowhere dense sets in $X$. Second category is something that is not first category. Generic(idea: typical) set is complement of first category.
+\end{definition}
+\begin{theorem}
+Complete metric (idea: continuum) space is second category ($X$ cannot be written as the countable union of nowhere dense sets).
+\end{theorem}
+\begin{remark}
+\begin{itemize}
+    \item From the theorem, we can prove that infinite dimensional Banach space is uncountable (\url{https://math.stackexchange.com/questions/217516/let-x-be-an-infinite-dimensional-banach-space-prove-that-every-hamel-basis-of}, \url{https://math.stackexchange.com/questions/854227/finite-dimensional-subspace-normed-vector-space-is-closed})
+    \item No relationship with measure
+    \item Open dense set is generic (it is very large).
+\end{itemize}
+\end{remark}
+\subsection*{Heine Borel}
+\begin{itemize}
+    \item For $\mathbb{R}^n$, compact iff closed and bounded.
+    \item For infinite dimensional Banach space, closed and boundedness does not imply compact: for example, consider the set of basis $S=(1,0,\dots), (0, 1, \dots), (0, 0, \dots, 1, \dots)$ with the metric $l^\infty$. This is clearly closed and bounded in this metric. But this is not compact (iff totally bounded(fail, this is a notion similar to compactness but whence not necessarily closed) and complete).
+    \item Another way is to see that closed and bounded subset of infinite dimensional Banach space is "too large" from the above remark (just realize that it has uncountably many elements and infinite basis so maybe it is reasonable to think that we cannot make it compact easily as in finite dimensional space).
+\end{itemize}
+\subsection*{Completing the space}
+\begin{theorem}
+    Every metric space has a completion.
+    \url{https://en.wikipedia.org/wiki/Complete_metric_space}
+\end{theorem}
+\begin{itemize}
+    \item Cauchy sequence is each element, where the distance is defined by the distance between the convergent points. Isometry since the constant sequence is included. Choose $\leq\frac 1i$ index for each $x^i$ (kind of diagonal).\url{https://math.stackexchange.com/questions/2019077/the-set-of-all-equivalence-classes-from-cauchy-sequences-is-complete}
+\end{itemize}
+\subsection*{Ordinary Differential Equation}
+\begin{itemize}
+    \item We are considering ODE $$u'=f(t,u), u(t_0)=u_0$$
+    Intuitively, we think that the initial value gives us the nearby slope so nearby points, and we can iterate and so on.
+    \item We can interpret $\frac {u'}u$ as per capita growth rate.
+    \item (Thm 2.24) $f(t,u)$ is a continuous function. For $(t_0, u_0)$, we can always find $I$ and consequently $u:I\to\mathbb{R}$ ("local solution").
+    \item $T_1=Nh$ is our rectangle for $u_\epsilon$. We need to choose good $T\leq T_1$. 
+    \item $M=sup\{\mid f(t,u)\mid\mid (t,u)\in R_1\}$: essentially maximum of the slope, because $f$ is given by a slope in ODE. 
+    
+    $T=\min (T_1, L/M)$: if $L<T_1 M$, Then choose $\frac LM$ (just to be safe).
+    \item Define $u_\epsilon$. $u\leq \delta$ (corresponding to difference in x coordinate), $Mh\leq \delta$ (corresponding to difference in y coordinate).
+    \item Check limiting argument regarding (2.26)!
+    It is indeed easy to see when we use Lebesgue integration(via dominated convergence thm). Super useful fact: If $f$ is bounded, then $f$ is Riemann integrable iff $f$ is almost surely continuous. If $f$ is Riemann integrable, then it is same as Lebesgue integral! (\url{https://math.stackexchange.com/questions/829927/general-condition-that-riemann-and-lebesgue-integrals-are-the-same})
+    \item Note also $f$ does not have to be continuous on $\mathbb{R}^2$. It only has to be continuous in the domain including $R_1$.
+    \item \textbf{When $f$ is Lipschitz, we do have uniqueness, which leads to Gronwall's inequality}
+    \item Gronwall's inequality: if certain condition holds, corresponding inequality holds as if it is equality.
+    \item Thm 2.26: $\delta$ really corresponds to $T$ before, and $T$ corresponds to $T_1$ before.
+    \item Goal: $\mid u(t)-u_0\mid \leq L$ when $\mid t-t_0\mid\leq \delta$. Define a function $D=\{0\leq \eta\leq\delta\dots\}$ and use continuity to show that it is closed and open.
+    \item Lipschitz concerns inequality of difference between two functions $u$ and $v$. But in order to show uniqueness we set $w=\mid u-v\mid$. Peano theorem naturally follows since $w\geq 0$, and $u_0=0$.
+    
+
+
+
+
+
+
+
+
+    
+\end{itemize}
+\subsection*{Poisson equation with the rectangle boundary}
+Green's formula - seem to work only for half space, sphere
+separation of variable - does not give me appropriate formula. The best way is to just guess!
+
+For finite difference approx method, we do not include boundary in the matrix, hence $m-1\times m-1$ matrix.
+
+
+
+
+
+
+
+
+\subsection*{The contraction Mapping Theorem}
+\begin{itemize}
+\item Contraction map is a special case of Lipschitz function where it maps from metric space to itself and Lipschitz constant $K\leq 1$.
+\begin{theorem}
+Strict contraction on a complete metric space has a unique fixed point.
+\end{theorem}
+\begin{proof}
+One way to construct Cauchy sequence is to show that for $n\geq m$, $d(x_n,x_m)\leq c_{n,m}$. Uniqueness simply follows from the fact that the constant is less than $1$. That is why it needs to be "strict."
+\end{proof}
+\item This is useful in dynamical system. 
+\begin{example}
+Logistic equation. $Tx=4\mu x(1-x)$ (here, $x_{n+1}=x(1-x)$). Depending on $\mu$, we have more than one fixed point.
+\end{example}
+\item
+We can solve $f(x)=0$ by recasting into $x=Tx$ (there are many ways). We know the uniqueness/existence, and we can solve this by using "iteration scheme" $x_{n+1}=Tx_n$.
+
+For example, $x^2-a=0\to x=\frac 12(x+\frac ax)$. So $Tx=\frac 12(x+\frac ax)$. Express this in the form $\lvert Tx_1-Tx_2\rvert =K\cdot\lvert x_1-x_2\rvert$. (caveat: complete space is closed, but not the other way around ($\mathbb{Q}$), $https://math.stackexchange.com/questions/6750/difference-between-complete-and-closed-set)$
+
+
+\item We can also use contraction mapping theorem in Fredholm operation. The key here is that $T$ can act on a function.
+\item Then the theorem 3.3 gives some result to the following discussion on PDE
+\end{itemize}
+
+Compact set in a metric space has convergent sub-sequence. Sometimes it is useful to construct non-convergent sub-sequence in order to show that the assumption is wrong (for example $x_n\not\to x$)
+
+\end{document}

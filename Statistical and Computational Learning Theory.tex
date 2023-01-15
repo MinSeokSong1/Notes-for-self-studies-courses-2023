@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\graphicspath{ {./images/} }
+\usetikzlibrary{shapes}
+\usepgfplotslibrary{polar}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{every axis/.append style={
+                    axis x line=middle,    % put the x axis in the middle
+                    axis y line=middle,    % put the y axis in the middle
+                    axis line style={<->,color=blue}, % arrows on the axis
+                    xlabel={$x$},          % default put x on x-axis
+                    ylabel={$y$},          % default put y on y-axis
+            }}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}[example]{Remark}
+
+\title{Statistical/Computational Learning Theory}
+\author{MinSeok Song}
+\date{}
+
+\begin{document}
+\maketitle 
+\begin{itemize}
+
+\item Learning rule (or a specific function) is "consistent" (with respect to examples so far): there exists mapping that matches examples so far.
+\item "realizable" means that there exists a true $f$ in $H$. \textbf{For the fixed learning rule, we can let a true $f$ be such that we make a mistake on every round.}
+\item for every learning rule, there exists a function that the specific learning rule cannot learn.
+\item iterative implementation: keep restricting hypothesis based on $(x_t,y_t)$ (call this $V_t$). In theory, this will make $<\lvert H\rvert$ mistakes. (the question was, "how many mistakes will I make for this learning algorithm for the entire phase?")
+
+\item Learning rule example: Halving learning rule: $h_t (x)=majority(h(x):h\in V_t)$ where $V_t$ is from before. (question) 
+This will make $\log_2\lvert H\rvert$ mistakes. The problem is that this is not computationally efficient (finding majority is hard).
+\item CNF(conjunctive normal form, and) vs DNF(disjunctive, or)
+
+\item Linear classifiers (half space): $h_{w,\theta}(x)=[[<w,\phi(x)>>\theta]]$ where this is a predictor using features $\phi_i$. Note that $\theta$ is not a degree, but rather ($w$, $\theta$) determines $(r,\theta)$. Convenient to add "intercept term" on the feature map. Half spaces because we divide into half.
+\begin{itemize}
+\item here, prior knowledge is given by the decision to use linear classifier and the selection of $\phi(x)$.
+\end{itemize}
+\item (p20) not clear on inclusions
+\item (p23)by weight we mean $w$.
+\item The meaning of $h_t (x)=majority(h_{w(x)}:w\in V_t)$: for each $w$, we reduce the set of classifiers according to $x_1,x_2,\cdots,x_{t-1}$.
+
+\item halving is difficult to use due to efficiency. just use ellipsoid transformation and the center value gives the majority prediction (called Ellipsoid Learner).
+
+\end{itemize}
+
+
+
+\end{document}

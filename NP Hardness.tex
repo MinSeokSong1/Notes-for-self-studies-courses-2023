@@ -1,0 +1,79 @@
+\documentclass{article}
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\graphicspath{ {./images/} }
+\usetikzlibrary{shapes}
+\usepgfplotslibrary{polar}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{every axis/.append style={
+                    axis x line=middle,    % put the x axis in the middle
+                    axis y line=middle,    % put the y axis in the middle
+                    axis line style={<->,color=blue}, % arrows on the axis
+                    xlabel={$x$},          % default put x on x-axis
+                    ylabel={$y$},          % default put y on y-axis
+            }}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}[example]{Remark}
+
+\title{NP Hardness}
+\author{MinSeok Song}
+\date{}
+
+\begin{document}
+\maketitle 
+\begin{itemize}
+\item NP complete problems
+\begin{itemize}
+\item P:
+all decision problems that can be solved in polynomial time.
+
+\item NP
+: all decision problems for which the proof of "yes" can be verified in polynomial time.
+
+\item NP-Complete: Any other NP problems can be reduced to this in a polynomial time. (ex) 3-SAT(Boolean Satisfiability problem, aka 3-CNF~conjunctive normal form), proof in $http://www.cs.ecu.edu/karl/6420/spr16/Notes/NPcomplete/3sat.html$. !Not sure why SAT being reduced to 3-SAT proves this.
+
+\item NP-hard: there exists NP-complete that can be reduced to this in a polynomial time. do not have to be decision problems, (ex) halting problem.
+
+\begin{itemize}
+\item picture: $https://www.geeksforgeeks.org/introduction-to-np-completeness/$
+\end{itemize}
+\end{itemize}
+\item Example of NP-complete
+
+1. Shortest vs. longest simple paths
+
+2. Euler tour vs. hamiltonian cycle (visit each vertex only once)
+
+3. 2CNF vs. 3CNF
+\item If we can prove NP-complete in polynommial time, then we can prove NP in polynomial time. general belief is that NP-complete is not solvable in polynomial time.
+\begin{itemize}
+\item so, how do we prove that something is NP-complete? (p1051)
+\end{itemize}
+
+
+
+
+
+\end{itemize}
+
+\end{document}

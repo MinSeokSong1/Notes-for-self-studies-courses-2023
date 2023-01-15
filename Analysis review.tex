@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage[hyphens,spaces,obeyspaces]{url}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\graphicspath{ {./images/} }
+\usetikzlibrary{shapes}
+\usepgfplotslibrary{polar}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{every axis/.append style={
+                    axis x line=middle,    % put the x axis in the middle
+                    axis y line=middle,    % put the y axis in the middle
+                    axis line style={<->,color=blue}, % arrows on the axis
+                    xlabel={$x$},          % default put x on x-axis
+                    ylabel={$y$},          % default put y on y-axis
+            }}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}[example]{Remark}
+
+\title{Analysis Review}
+\author{MinSeok Song}
+\date{}
+
+\begin{document}
+\maketitle 
+
+\subsection*{Sequences and series of functions}
+\begin{itemize}
+\item If $f$ is real-valued, then "complete" in uniform convergence sense (this can be useful for the proof, the reason $\mathbb{R}$ is complete is due to Heine-Borel).
+\item (Thm 7.13, about when do we guarantee uniform convergence) It is useful to set $K_n=\{x\mid g_n (x)\geq \epsilon\}$ and show that $K_n=\phi$, in order to show uniform continuity (will be easy to use monotonicity, and extract finiteness for compactness).
+\item Counterexample when $n$ is both on the coefficient and exponent. $f_n (x)=n^2 (1-x^2)^n$ or $f_n (x)=n(1-x^2)^n$. Note also that this is not monotonic in $n$.
+\item why does $C(X)$ need to be bounded? We have an infinite supnorm.
+\item clearly, $f_n(x)=\frac{\sin nx}{\sqrt n}$ gives the counterexample about derivatives. $\sin$ and $\cos$ are easy to play around when it comes to derivative.
+\item Really nothing about the uniform convergence of derivatives. If we know that the derivatives converge uniformly, then we can actually find its value (thm 7.17). 
+\item Way of proof: first we need to show uniform convergence of $f$. We manipulated inequality and used mean value theorem. Now defining $f$, realize that $f'(x)=\lim_{n\to\infty}f_n'(x)$ simply needs uniform convergence argument (switching of limits).
+\item Nowhere differntiable continuous function: defined as infinite sum of scaled "absolute function." 
+\item Equicontinuity is like uniform continuity for every $n$.
+\item Ascoli-Arzela applies for when $K$ is compact, point-wise bounded, and equicontinuous. (then is uniformly bounded and exists uniformly convergent subsequence)
+\item (Sort of) converse holds :we just need uniform convergence on a compact set. Then we can guarantee equicontinuity (uniform convergence is like a bridge between index, and compact set gives uniform continuity, essentially uniform continuity + uniform convergence = equicontinuity).
+\item (Thm 7.23) pointwise bounded: for each point, we can extract convergent subsequence, countable set: extract diagonal elements. The key is to construct subsequence of subsequence, etc.
+\item (Thm 7.25) Uniformly bounded: use compactness to use maximum, and point-wise boundedness. Convergent subsequence: divide into dense set (and use 7.23)/its complement (use density to divide into three).
+\item Precompact set of $C(K)$ is equicontinuous(?, page 45).
+\item 
+\end{itemize}
+
+\end{document}

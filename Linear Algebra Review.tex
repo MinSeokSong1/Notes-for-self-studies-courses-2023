@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[hyphens,spaces,obeyspaces]{url}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\graphicspath{ {./images/} }
+\usetikzlibrary{shapes}
+\usepgfplotslibrary{polar}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{every axis/.append style={
+                    axis x line=middle,    % put the x axis in the middle
+                    axis y line=middle,    % put the y axis in the middle
+                    axis line style={<->,color=blue}, % arrows on the axis
+                    xlabel={$x$},          % default put x on x-axis
+                    ylabel={$y$},          % default put y on y-axis
+            }}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}[example]{Remark}
+
+\title{Linear Algebra review}
+\author{MinSeok Song}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{itemize}
+\textbf{Rank Nullity Theorem}
+
+Let $T:V\to W$ be a linear transformation between two vector spaces. Then $Rank (T)+Nullity(T)=dim(V)$.
+(this can be easily shown by using first isomorphism theorem and splitting lemma(check))
+\begin{proof}
+Another method is to compare $Nullity(T)$ and $dim(V)$, and apply Steinitz exchange lemma to find the dimension of the image.
+\end{proof}
+\item Steinitz exchange lemma: use induction and exchange $u_k$ with $w_i$ for some $i\in\{w_k\dots w_n\}$ in a induction step.
+\item Why is covariance matrix positive definitie?
+First define joint normal distribution. 
+
+$$X_j=m_j+a_{j1}Z_1+a_{j2}Z_2+\dots+a_{jm}Z_m$$
+For the case $m_j=0$, we have $X=AZ$. $AA^T$ is called the covariance matrix. Every symmetric semi-positive can be written as this form: use the spectral theorem.
+
+\item $Tr(A)=\sum \lambda_i$
+\item 
+\begin{enumerate}
+\item normal iff unitarily diagonalizable
+\item Hermitian iff unitarily diagonalizable with real diagonal entries (aka Spectral theorem)
+\end{enumerate}
+\item (digression) 
+
+X is diagonalizable iff the minimal polynomial is the product of distinct $x-\lambda_i$'s. So the degree of this polynomial is equal to the number of distinct eigenvalues.
+
+Characteristic polynomial of a square matrix is $\det(tI-A)$. Caley-Hamilton states that every square matrix over a commutative ring satisfies its own characteristic equation (intuition: $p(A)v_j=p(\lambda_j)v_j=0$). Indeed, characteristic polynomial and minimal polynomial have the same roots over $\mathbb{C}$ (use $0=\mu_A (A)\cdot v=\mu_A (\lambda)\cdot v$). In fact, it is important to note that $f(\lambda)$ is an eigenvalue of $f(A)$.
+
+\item positive eigenvalues$\not\to$positive definite
+
+Usually, we consider positive definite matrix AND symmetric matrix so eigenvalue is real.
+\item If $P$ is Hermitian($Pv\cdot w=v\cdot Pw$) and $P^2=P$, the $P$ is called orthogonal projection.
+\item \textbf{Gerschgorin's theorem}
+\end{itemize}
+\subsection*{Positive Definite}
+\begin{itemize}
+\item positive definite implies eigenvalues all positive (just use the definition)
+    \item Hermitian matrix is positive definite iff all its leading principal minors have positive determinant.
+    \item Hermitian matrix is positive semidefinite iff all its principal minors have non-negative determinant ($https://math.stackexchange.com/questions/1831988/how-to-prove-that-a-is-positive-semi-definite-if-all-principal-minors-are-non$).
+\begin{lemma}
+Strictly diagonally dominant matrix is nonsingular.
+\begin{proof}
+There exists $x\neq 0$ such that $Ax=0$. Use triangle inequality.
+\end{proof}
+\end{lemma}
+\begin{theorem}
+The number of eigenvalues in each connected component of $\cup_{i=1}^n G_i$ is equal to the number of Gerschgorin discs that constitute that component.
+\begin{proof}
+Suppose $z\not\in \cup^n_{i=1}G_i$. Use the above lemma on $A-zI$. For the second statement, scale the non-diagonal elements.
+\end{proof}
+Note that $G_i$ is a closed disc.
+\end{theorem}
+
+\item Schur factorization
+$A=QRQ^T$
+\begin{proof}
+Consider $E_\lambda$ and complement with Steinitz exchange lemma to form orthogonal basis of $\mathbb{C}^n$. Think in terms of change of basis. Use induction.
+\end{proof}
+\item Singular Value Decomposition
+\begin{proof}
+Apply spectral theorem on $AA^T$ and $A^TA$. The intuition of singular value: $x\to Ax$ as rotation and scaling by singular value (make circle into ellipsoid) vs. eigenvalue: how much $v$ is called when we act by $A$.
+\end{proof}
+\item LDU decomposition
+\begin{proof}
+
+\end{proof}
+\item Cholesky decomposition
+
+A real Hermitian positive-definite matrix A can be expressed as $LL^T$.
+\item QR decomposition (classical Gram Schmidt Algorithm); unstable (p58, $(2m(\text{inner product})+2m\text{m multiplication, m subtraction})\cdot \frac{n(n+1)}2$). The best intuition is to think of this as finding an orthonormal vectors corresponding to $A$.
+
+$$1. r_{ij}=q_i^*v_j$$
+
+$$2. v_j=v_j-r_{ij}q_i$$
+\begin{enumerate}
+\item Householder rotation
+
+
+\item Givens rotation
+
+\end{enumerate}
+\item LU factorization: Upper triangular part $U$ is a final part and $L$ is elimination steps that we keep track of.
+\subsection*{Sylvestor criterion}
+ I really don't see what's "special case" in this first proof in the wikipedia page \url{https://en.wikipedia.org/wiki/Sylvester%27s_criterion}. 
+
+Idea: $M_n$ positive definite $\to$ All leading principal minor $det>0$.
+
+Use trick of choosing special $x$ and use the fact that determinant is the product of Eigenvalues/positive definite has positive eigenvalues; the other way we complete the square and use Schur decomposition. (basically induction)
+\end{itemize}
+
+\end{document}

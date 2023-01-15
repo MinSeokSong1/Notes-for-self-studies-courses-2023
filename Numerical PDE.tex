@@ -1,0 +1,203 @@
+\documentclass{article}
+\usepackage[hyphens,spaces,obeyspaces]{url}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\graphicspath{ {./images/} }
+\usetikzlibrary{shapes}
+\usepgfplotslibrary{polar}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{every axis/.append style={
+                    axis x line=middle,    % put the x axis in the middle
+                    axis y line=middle,    % put the y axis in the middle
+                    axis line style={<->,color=blue}, % arrows on the axis
+                    xlabel={$x$},          % default put x on x-axis
+                    ylabel={$y$},          % default put y on y-axis
+            }}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}[example]{Remark}
+
+\title{Numerical PDE}
+\author{MinSeok Song}
+\date{}
+
+\begin{document}
+\maketitle 
+\section*{Lecture 1}
+\begin{itemize}
+\item Three kinds of PDE we deal with in the class.
+\begin{itemize}
+\item parabolic PDE (aka heat equation, $\delta=0$)
+\item hyperbolic ($\delta<0$) (ex) wave equation
+\item elliptic ($\delta>0$)
+
+Note that in a way, $a$ and $c$ are disproportionately related.
+\end{itemize}
+\item In numerical PDE, we care about i)accuracy, ii)stability, iii) quickness.
+
+\item Introduce the definition of vector space, linear functional, bilinear form, and norm. 
+Note that for a finite Euclidean vector space, for every bilinear form we can find a matrix $A$ so that $B(u,v)=u^TAv$. (consider $u^TAv=\sum^n_{i,j=1}u_iA_{ij}v_j$ where $A_{ij}=B(e_i,e_j)$ and $u,v$ being expressed with respect to these basis).
+
+\item Symmetric, positive bilinear form is exactly vector space.
+\begin{lemma}
+There exists a unique $v_0\in H_0$(closed subspace of Hilbert) such that $\lVert v-v_0\rVert=d(v,H_0)$.
+\end{lemma}
+
+\item Using this, we can show that $v=v_0+v_{0,\perp}$ where $(v_{0,\perp},H_0)=0$.
+(parallel equation? check.)
+
+\end{itemize}
+\section*{Lecture 2}
+\begin{itemize}
+\item In finite dimension, all norms are equivalent.
+$https://math.mit.edu/~stevenj/18.335/norm-equivalence.pdf$, but the constant depends on dimension. The idea is to use $\lVert \rVert_1$. We crucially used here the fact that unit sphere is compact in finite dimension (Heine-Borel). We consider the norm as a continuous function where the domain is endowed by $L_1$ and the codomain by a random norm.
+\item If linear operator is bounded then it has a norm. The space of bounded linear operator from Banach to Banach is Banach space.
+\item We call $B$ is linear functional if $B:V\to\mathbb{R}$ is bounded (which is same as continuity, using the fact that continuity iff continuity at the origin, by the linearity). The space of linear functional is called the dual space $V^*$.
+\begin{theorem} (Riesz Representation Theorem) We have $H=H^*$ in the sense that $\lVert L\rVert_{H^*}=\lVert u\rVert_H$. Here we used sup norm. For every $L\in H^*$, there exists $u\in H$ such that $L(v)=(v,u)$ for every $v\in H$.
+\end{theorem}
+\begin{theorem}
+(Rudin p40, recast) "we can find some measure" that represents linear functional. $L(f)=\int_X f d\mu$ for every $f$.
+\end{theorem}
+\begin{proposition}
+(Stein and Shakarchi p13, recast) For every bounded functional $l$ on $L^p$ there exists $g\in L^q$ so that $l(f)=\int_X f(x)g(x)d\mu (x)$ for all $f\in L^p$. Moreover, $\lVert l\rVert_{B_*}=\lVert g\rVert_{L^q}$.
+\end{proposition}
+Note that weak derivative is unique up to measure zero.($https://math.stackexchange.com/questions/538617/uniqueness-of-a-weak-derivative$, check!)
+
+Also, completion and closure can be equivalent if we have an appropriate ambient space/metric.
+
+\begin{definition}
+Bilinear form $a$ is bounded if there exists $M$ such that $a(u,v)\leq M\lVert u\rVert\lVert v\rVert$. $a$ is coercive if there exists $\alpha>0$ such that $\lvert a(v,v)\rvert\geq\alpha\rVert v\rVert^2$
+\end{definition}
+\begin{example}
+$V=\mathbb{R}^n$:$M=\sigma_1$, intuition is that $a(u,v)=v^T Au$ means we rotate $v$, scale at most by $\sigma_1$ then rotate $u$.
+
+If $A$ is symmetric, $\alpha=\lvert \lambda_n\rvert = \sigma_n$. Note that symmetric matrix is orthogonally diagonalizable;$A=V\Sigma V^T$, and eigenvalue can be negative.
+\end{example}
+Important note for symmetric positive definite matrix (\url{https://math.stackexchange.com/questions/1808799/positive-definite-if-and-only-if-determinants-are-positive}).
+\begin{theorem}
+Let $a$ be positive symmetric bounded bilinear form. If and only if condition for the solution $u$ where $a(u,v)=L(v) : F(u)\leq F(v)$ for some function $F(v)=\frac 12a(v,v)-L(v)$ for every $v\in H$.
+\end{theorem}
+\begin{theorem}
+(Lax-Milgram)
+Inner product on $H$ is not the same as bilinear form. Aso, there is no relationship whatsoever between bilinear form and linear functional except that they are on the same space. $u$ is unique
+\end{theorem}
+\item Think of $L$ as an input, $u$ as a solution.
+
+\section*{Lecture 3}
+    \item $\partial\bar\partial u(x_j)=u''(x_j)+O(h^2\lVert u\rVert_{C^4})$ ($C^k$ norm here is a max of sup of each derivatives upto $k$) by Taylor approximations. How do we come up with this? I don't know. ($U_j=\frac{U_{j+1}-2U_j+U_{j-1}}{h^2}$)
+    $u''(x_j)=\bar\partial\partial u(x_j)+\bar\partial O(h)+O(h)$???
+    \item Due to floating point error, the smallest $h$ does not necessarily give the smallest error ($\frac \epsilon h$).
+    
+    \item Indeed, $(A_h)_j=-a_j\partial\bar\partial$, $j=1,\dots, M$.
+    \item Essentially, we switched to matrix form, and reduce it to $-D_a LU=F$. D for diagonal, L is for operator, U is obvious.
+    \item \textbf{Error analysis}
+    \begin{itemize}
+        \item Maximum principle: $A_hU\leq 0\to \max_j U_j=\max\{U_0,U_M\}$. Think of concave function. So now the important point is that $\frac {U_{j+1}-2U_j+U_{j-1}}{h^2}$ does not depend on $h^2$.  That is, $A_h R$ can be constant, not depending on $h$. Here in Lemma2, we have Poisson equation $A_h U=f$ but for the maximum principle, we have $A_h U\leq 0$.
+        \item $A_h(U_j+R_j)$
+        \item Question: how do we come up with $w(x)$? well, it is the ODE solution for $w(0)=w(1)=0$ and $w''=c$. I wonder where $O(h^2)$ goes.
+        \item In class, we only did 1d case.
+    \end{itemize}
+
+\subsection*{Lecture 4}
+    \item Convergence = stability(Maximum principle, this helps taking off Laplacian) + convergence(Taylor expansion)
+    \item To get the Eigenvalue/Eigenvectors, we have three separate equations. The first step is to guess $v_k=s^k$. Getting two solutions for $s$, we can let $v_k=c_+ s^k_+ +c_- s^k_-$. The second important point is to let $\lambda_0=2\cos \xi$.
+    \item Essentially $L^2$ norm, so sub-multiplicativity holds. We just multiply by $h$.
+    \item $L^2$ norm of the matrix, so we care about the maximum/minimum eigenvalues.
+    \item The goal is to make discretized function approximate to the analytic in $L^2$. To this end, we change $l^2$ and inner product so both converge nicely.
+    \item analogous result holds for 2d case. 
+
+\subsection*{Higher dimension($\geq 2$)}
+
+
+    
+\end{itemize}
+
+
+
+
+
+
+
+
+\newpage
+\begin{itemize}
+\section*{Digression}
+\subsection*{Big O, small O}
+    \item Big O $\to limsup\leq C$ as $h\to 0$
+    \item Small O: $\lim\to 0$ as $h\to 0$
+\subsection*{Fourier transform}
+    \item $e_n=e^{-in\theta}$. 
+    
+    $(e_n, e_m)=\frac 1{2\pi}\int^{2\pi}_0 e_n\bar e_md\theta$ if $n=m$, 0 if $n\neq m$. We may put $\theta=2\pi x$.
+    \item Best approximation: If $f$ is periodic, then $$\lVert f-S_N (f)\rVert\leq \lVert f-\sum_{\mid n\mid\leq N}c_ne_n\lVert$$. Indeed, if $f$ is integrable, then $\frac 1 2\pi\int^{2\pi}_0\mid f(\theta)-S_N (f)(\theta)\mid^2d\theta\to 0$ as $N\to \infty$.
+    \item Parseval's identity
+    $$\sum^\infty_{-\infty}\mid a_n\mid^2=\frac 1 {2\pi}\int^{2\pi}_0 \mid f(\theta)\mid^2 d\theta$$, in general $$\sum^\infty_{-\infty}\mid a_n\mid^2\leq \lVert f\rVert ^2$$.
+    \item Fourier transform of Schwartz class $f\in S(\mathbb{R})$ is defined by $\hat f(\xi)=\int^\infty_{-\infty}f(x)e^{-2\pi ix\xi}dx$. $\hat f(\xi)$ is in Schwartz class as well.
+    \item It is a bijective mapping on a Schwartz class. 
+    \item Multiplication formula ($\int \hat f \cdot gdx=\int \hat g\cdot fdx$), $\hat{f*g}=\hat f\cdot\hat g$.
+    \item Fourier inversion, Plancheral ($\lVert \hat f\rVert=\lVert f\rVert$) hold when fourier transform of moderately decreasing function is moderately decreasing function. 
+    \item Intuition:
+    \begin{itemize}
+        \item $a_n=\int^1_0 f(x)e^{-2\pi inx}dx\to \hat f(\xi)=\int^\infty_{-\infty} f(x)e^{-2\pi ix\xi}dx$
+        \item $f(x)=\sum^\infty_{n=-\infty}a_n e^{2\pi inx}\to f(x)=\int ^\infty_{-\infty}\hat f(\xi)e^{2\pi ix\xi}d\xi$
+    \end{itemize}
+    \item Bridge between fourier series(periodic function) and transform(non-periodic function): Poisson summation formula $\sum_{n\in\mathbb{Z}}f(n)=\sum_{n\in\mathbb{Z}}\hat f(n)$
+    \end{itemize}
+    \subsection*{Finite Difference Method}
+    \begin{itemize}
+\item Log-log scale plot works well since... $E(h)\approx Ch^p\to \log\mid E(h)\mid\approx \log\mid C\mid + p\log h$
+\item $$u(x+h)=u(x)+hu'(x)+\frac 12 h^2 u''(x)+\frac 16 h^3u'''(x)+O(h^4)$$
+$$u(x-h)=u(x)-hu'(x)+\frac 12h^2u''(x)-\frac 16h^3 u'''(x)+O(h^4)$$
+\item (p7) follows from odd formula in p4..
+\item first order: left side, right side, both sides, undetermined coefficients.
+\item second order: essentially adding these two or using undetermined coefficients.
+\item Method of undetermined coefficients: the objective is to approximate $u'$ by using specific non-differential terms. We can let $a_i$ as the coefficient for these. (~page 9)
+
+\subsection*{Stability, Consistency, Convergence}
+    \item Stability: the error does not get amplified.
+    
+    \item Consistency: Scheme should tend to the differential equation.
+
+    \item Convergence: Method approaches true solution as $h$ goes to $0$.
+
+
+\url{https://www.researchgate.net/post/What_is_the_difference_between_consistency_stability_and_convergence_for_the_numerical_treatment_of_any_PDE} I'm just very confused.. they all look similar..
+
+\subsection*{Errors}
+\item absolute error, relative error ($x$ being in the denominator makes sense), point-wise error
+\item Machine epsilon (usage of infimum)
+\item Floating point representation (sign, mantissa, exponent)
+
+(1) roundoff errors: mantissa roundoff
+
+(2) overflows and underflows: exponent too big/small
+
+(3) cancellation errors: due to roundoff error we may get an inaccurate result.
+
+\item For $Ax=b$, if we know the upper bound of relative error for $A$ and $b$, We may get an upper bound of relative error.
+\item Stability is about algorithm (input and output), condition is about modelling (in order to formulate the mathematical problem).
+\item Well-posed problem if uniqueness and existence hold. Otherwise, it is ill-posed. 
+\item \textbf{The condition number of an instance of a problem is the reciprocal of the normalized distance to the nearest ill-posed instance.}
+$\min_{X\in M}\lVert A-X\rVert=\frac 1{\lVert A^{-1}\rVert}$ follows directly by Eckart-Young (rank$X\leq r-1$ case). Note that this is a minimal SINGULAR value!
+
+
+    \end{itemize}
+\end{document}

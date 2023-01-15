@@ -1,0 +1,117 @@
+\documentclass{article}
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\graphicspath{ {./images/} }
+\usetikzlibrary{shapes}
+\usepgfplotslibrary{polar}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{every axis/.append style={
+                    axis x line=middle,    % put the x axis in the middle
+                    axis y line=middle,    % put the y axis in the middle
+                    axis line style={<->,color=blue}, % arrows on the axis
+                    xlabel={$x$},          % default put x on x-axis
+                    ylabel={$y$},          % default put y on y-axis
+            }}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}[example]{Remark}
+
+\title{Convex Optimization}
+\author{MinSeok Song}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{itemize}
+\item Definition of Affine/convex sets/affine hull/affine dimension
+\item relative interior(relint). We can modify the definition for the convex set. 
+($https://en.wikipedia.org/wiki/Relative_interior$). Definition of relative boundary ($\bar C$\textbackslash relintC)
+
+Intuition is clear by looking at 3D vs. 2D in page23 Ex2.2
+
+Generalize convexity to function $p$ whose integral/infinite sum is one on the convex set, or even more expected value of $x$ with some underlying distribution.
+\subsection*{Cones}
+Cone is simply defined as $x\in C\to \theta\cdot x\in C$ for $\theta>0$.
+
+Conic hull is the smallest convex cone.
+\item
+hyperplane is defined by $\{x\mid a^Tx=b\}$
+Intuitively this can be expressed as $a^T(x-x_0)=0$.  $a$ is a normal vector and $a_0$ is an offset term. We can also define halfspace and the interior of half space.
+
+\subsection*{Ellipsoid}Ellipsoid is given by $\{x\mid (x-x_c)^T P^{-1}(x-x_c)\leq 1\}$. We have $P^{-1}$ since the length should be on the denominator. The length of semi-axes is given by $\sqrt \lambda_i$'s.
+\item We can also express as $\{x_c+Au\mid \lVert u\rVert_2\leq 1\}$ where $A$ is positive definite. When $A$ is positive semidefinite and $A$ is singular it is called a degenerate ellipsoid.
+\item Norm cone is defined as $C=\{(x,t)\mid \lVert x\rVert \leq t\}$
+\item simplex is defined by $\{\theta_0v_0+\dots+\theta_kv_k\mid \theta\succeq0, 1^T\theta=1\}$ where $v_i$'s are affinely independent ($v_{i+1}-v_i$'s are independent). Also called convex hull.
+\item unit simplex $\{x\succeq 0, 1^Tx\leq 1\}$
+
+\item probability simplex $x\succeq 0, 1^Tx=1$; can be expressed as polyhedron (idea is to make $AB=\begin{pmatrix}
+I\\
+0
+\end{pmatrix}$).
+\item Convex hull can be generalized to $\{\theta_1v_1+\dots+\theta_kv_k\mid\theta_1+\dots+\theta_m=1, \theta_i\geq 0, i=1,\cdots,k\}$ where $m\leq k$ (can be interpreted as convex hull + conic hull). Now this is characterization of a polyhedron.
+\item \textbf{how do we show convexity? use definition, intersection, affine function, special functions...}
+\item Positive semi definite is convex because it is intersection of half spaces (linear combination of elements in $A$).
+\item (infinite) intersection of halfspaces $\Leftrightarrow$ closed convex
+\item Image of convex under affine function is convex. Inverse image as well.
+\item projection, Cartesian product, partial sums ($S=\{(x,y_1+y_2)\mid (x,y_1)\in S_1, (x,y_2)\in S_2\}$) of convex sets are convex.
+\item (p38) inverse of the positive semidefinite cone? (p39) what is hyperbolic? inverse image confusing anyway
+\subsection*{Perspective function}
+\begin{definition}
+Perspective function is $P:\mathbb{R}^{n+1}\to \mathbb{R}^n$ where $dom P=\mathbb{R}^n\times \mathbb{R}_{++}$ mapped by $P(z,t)=z/t$ 
+(intuition: normalize by the last element and drop it, remember pinhole camera; this is why we have $[P(x),P(y)]=P([x,y])$).
+\end{definition}
+\item This explains why the image of convex is convex. The inverse image as well. (remember $\mu, 1-\mu$ is given by how much weight we ascribe to $t$ and $s$)
+\begin{definition}
+The linear-fractional (or projective) function is defined by $P\circ g$ where $g(x)=\begin{pmatrix}
+A\\
+C^T
+\end{pmatrix}
+x+
+\begin{pmatrix}
+b\\
+d
+\end{pmatrix}$, i.e. $f(x)=(Ax+b)/(c^Tx+b)$ with $dom f=\{x\mid c^Tx+b>0\}$
+\end{definition}
+\item (p42 check) what is the difference between z and v?
+\end{itemize}
+\subsection*{Generalized inequality}
+\begin{itemize}
+\item convex, closed. solid, pointed so that it has nice properties.
+    \item Pointed means that pointed on zero. That is, if $x\in K,-x\in K$ then $x=0$. 
+    \item what are the examples of proper cone?
+    Symmetric matrix(positive semidefinite one is a proper cone) can be thought of as a cone.
+    \item Next example restricts the dimension into $n-1$. Note we use "non negative" a lot here due to being a cone.
+\end{itemize}
+\subsection*{minimum/minimal}
+\begin{itemize}
+    \item Minimum: $S\subseteq x+K$
+    \item Minimal: $(x-K)\cap S=\{x\}$
+\end{itemize}
+\subsection*{Separating hyperplane}
+\begin{itemize}
+    \item The specific choice of $a$ and $b$ so that it is orthogonal to $a$ and passes through the midpoint (using difference of squares formula).
+    \item (page 49) Negative differentiation at zero $\to$ value at zero is larger than a little later than that.
+\end{itemize}
+\newpage
+\section*{Digression}
+\subsection*{Hahn-Banach}
+\end{document}
