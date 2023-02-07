@@ -49,7 +49,8 @@
 \item Counterexample when $n$ is both on the coefficient and exponent. $f_n (x)=n^2 (1-x^2)^n$ or $f_n (x)=n(1-x^2)^n$. Note also that this is not monotonic in $n$.
 \item why does $C(X)$ need to be bounded? We have an infinite supnorm.
 \item clearly, $f_n(x)=\frac{\sin nx}{\sqrt n}$ gives the counterexample about derivatives. $\sin$ and $\cos$ are easy to play around when it comes to derivative.
-\item Really nothing about the uniform convergence of derivatives. If we know that the derivatives converge uniformly, then we can actually find its value (thm 7.17). 
+\item Really nothing about the uniform convergence of derivatives. If we know that the derivatives converge uniformly, then we can actually find its value (thm 7.17). The value matching in the original function comes from Riemann integration constant factor, I think. 
+\item Riemann integration and uniform convergence kinda makes sense because we are approximating in both cases. 
 \item Way of proof: first we need to show uniform convergence of $f$. We manipulated inequality and used mean value theorem. Now defining $f$, realize that $f'(x)=\lim_{n\to\infty}f_n'(x)$ simply needs uniform convergence argument (switching of limits).
 \item Nowhere differntiable continuous function: defined as infinite sum of scaled "absolute function." 
 \item Equicontinuity is like uniform continuity for every $n$.
@@ -58,7 +59,22 @@
 \item (Thm 7.23) pointwise bounded: for each point, we can extract convergent subsequence, countable set: extract diagonal elements. The key is to construct subsequence of subsequence, etc.
 \item (Thm 7.25) Uniformly bounded: use compactness to use maximum, and point-wise boundedness. Convergent subsequence: divide into dense set (and use 7.23)/its complement (use density to divide into three).
 \item Precompact set of $C(K)$ is equicontinuous(?, page 45).
-\item 
+\item Bernstein intuition: $B_n(f)(x)=E(f(\frac{B(n,x)}n))=\sum_{k=0}^n f(\frac kn)\binom nkx^k(1-x)^{n-k}$. By law of large number, $n^{-1}B(n,x)\to x$ almost surely.
+\item Related note to Ascoli-Arzela, "infinite dimension is very huge."
+
+\begin{theorem}
+Let $X$ be a normed space. Let $Y$ be a closed proper subspace of $X$ and $0<\alpha<1$. There exists $x\in X$ with $\mid x\mid=1$ such that $\midx-y\mid\eq \alpha$ for all $y\in Y$. \url{https://www-users.cse.umn.edu/~garrett/m/fun/riesz_lemma.pdf}?
+
+
+
+
+
+\section*{measure theory}
+\item The completion of the Borel sigma algebra with respect to Lebesgue measure is the sigma algebra of lebesgue measurable sets.
+\item An example of non-lebesgue measurable set is Vitaly set?
+\item The way to approximate the positive $f$ by a simple function is to consider two sets separating at level $n$ and we refine the sum for the one below. 
+
+\end{theorem}
 \end{itemize}
 
 \end{document}

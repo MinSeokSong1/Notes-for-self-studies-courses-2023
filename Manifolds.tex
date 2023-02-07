@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage[hyphens,spaces,obeyspaces]{url}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\graphicspath{ {./images/} }
+\usetikzlibrary{shapes}
+\usepgfplotslibrary{polar}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{every axis/.append style={
+                    axis x line=middle,    % put the x axis in the middle
+                    axis y line=middle,    % put the y axis in the middle
+                    axis line style={<->,color=blue}, % arrows on the axis
+                    xlabel={$x$},          % default put x on x-axis
+                    ylabel={$y$},          % default put y on y-axis
+            }}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}[example]{Remark}
+
+\title{Manifolds}
+\author{MinSeok Song}
+\date{}
+
+\begin{document}
+\maketitle                                                                                                                                                   
+\begin{itemize}
+\subsection*{Notion}
+\item \textbf{Taylor's theorem} Use mean value theorem iteratively. In the proof, the argument of the error $f^{n}$ gets close to $x$ as $n$ gets higher but in fact the function $g$ (which we use MVT for) depends on $n$, so we can't say much.
+\item In Tu's book, we can use the theorem iteratively on $g_i (x)$ to get higher terms. $g_i$ is basically coefficient of the highest term.
+\item Definition of directional derivative (\textbf{can identify with simply $v$, proved by Taylor's theorem for surjectivity, since we can kill generality of $g_i$ by specifying a point $p$}), germ of $f$ at $p$, algebra over a field $K$ (example: $C^\infty_p$).
+\item linear map $C^\infty_p\to\mathbb{R}$, satisfying Leibnitz rule = derivation at $p$
+\item For vector fields we do not specify a point.
+\item $Xf$ is natural derivatives.
+\item Derivative of algebra is a map $f\to Xf$ satisfying $D(ab)=bDa+aDb$, nothing to do with real derivatives.
+\begin{definition}
+Covector $V^v$ is a linear function on $V$
+\end{definition}
+\item $V^v$ is a vector space, and the basis of $V$ corresponds to the basis of $V^v$ (coefficeints of $v\in V$).
+\item $sgn(\sigma\circ \tau)=sgn(\sigma) sgn(\tau)$
+
+\item Inversion: a pair $\sigma(i),\sigma(j)$ such that $i<j$ but $\sigma(i)>\sigma(j)$. We can see if odd or even by counting the number of inversion. This seems like an awfully ineffective method though. 
+\item permutation calculated from right to left.
+\item $k-linear$ functions ($V^k\to\mathbb{R}$), we have notion of symmmetric and alternating. We are interested in $A_k (V)$, alternating k-covectors.
+\item Permutation action on multilinear functions.
+\item In general, action $G$ on a set $X$, satisfying two axioms.
+\item $S$ and $A$ in $Sf$ and $Af$ are simply sum of all permutations $\in S_k$.
+\item tensor product of $k-linear$ and $l-linear$ is just natural $k+l-linear$ function.
+\item Wedge product of alternating functions is defined by $f\wedge g=\frac 1{k!l!}A(f\otimes g)$. So it is a lienar function. Basically, dividing because duplicates arises (since $f$ and $g$ are alternating functions). Note also that $\sigma\tau=\tau\sigma$.
+\item We can simplify using "(k,l)-shuffle" (basically ascending order).
+\item Anticommutativity ($(-1)^{kl}$). This is why $f\wedge f=0$
+\subsection*{Differential Form}
+\item $(df)_p=<\cdot, f>:T_p(\mathbb{R}^n)\to \mathbb{R}$
+\item Differential form $w=df:U\to\cup_{p\in U}T^* _p (\mathbb{R}^n)$
+\item This is a vector space on $\mathbb{R}$, with basis $dx^i$.
+\item Now we can justify $df=\sum\frac{\partial f}{\partial x^i}dx^i$ ($f$ smooth then $df$ also smooth).
+\item Note that $A_0(T_p\mathbb{R}^n)=\mathbb{R}$. Subscript $0$ suggests the kind of argument we consider.
+\item Differential form at point $p$ is linear function, and so we can define the Wedge product between them (note that $Af$ is alternating, and this wedge is anti-commutative and associative).
+\item Notation: $\Omega^k (U)$ is a vector space of $C^\infty$ $k$-forms on $U$.
+\item Graded algebra over a field is a form $\bigoplus_{k=0}^\infty A^k$ such that the multiplication map sends $A^k\times A^l$ to $A^{k+l}$. Differential form is the best example. Antiderivative of the graded algebra is a $K-$linear map $D:A\to A$ such that $D(ab)=(Da)b+(-1)^k aDb$
+\item Three characterization of the exterior derivatives: antiderivation of degree 1, $d^2=0$, $(df)(X)=Xf$ for smooth function $f$ (prop 4.8).
+\item Vector fields use subscript and differential forms use superscript.
+\item $C^\infty (U)\to_{grad} VF \to_{curl} VF \to_{div} C^\infty (U)$
+\item important fact: 1-form on $\mathbb{R}^3$ is exact iff it is closed.
+\end{itemize}
+\end{document}

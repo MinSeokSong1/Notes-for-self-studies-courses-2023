@@ -1,5 +1,5 @@
 \documentclass{article}
-
+\usepackage[hyphens,spaces,obeyspaces]{url}
 \usepackage{pgfplots}
 \usepackage{tikz}
 \usepackage{graphicx}
@@ -96,7 +96,7 @@ d
 \subsection*{Generalized inequality}
 \begin{itemize}
 \item convex, closed. solid, pointed so that it has nice properties.
-    \item Pointed means that pointed on zero. That is, if $x\in K,-x\in K$ then $x=0$. 
+    \item Pointedness guarantees reflexivity.
     \item what are the examples of proper cone?
     Symmetric matrix(positive semidefinite one is a proper cone) can be thought of as a cone.
     \item Next example restricts the dimension into $n-1$. Note we use "non negative" a lot here due to being a cone.
@@ -105,13 +105,150 @@ d
 \begin{itemize}
     \item Minimum: $S\subseteq x+K$
     \item Minimal: $(x-K)\cap S=\{x\}$
+    \item Check the function involving $S=\{ P\in S^n_{++}:v_i^TP^{-1}v_i\leq 1\}$
 \end{itemize}
 \subsection*{Separating hyperplane}
 \begin{itemize}
     \item The specific choice of $a$ and $b$ so that it is orthogonal to $a$ and passes through the midpoint (using difference of squares formula).
-    \item (page 49) Negative differentiation at zero $\to$ value at zero is larger than a little later than that.
-\end{itemize}
+    \item Proof by contradiction. Assume negative and we extracted some inequality. That gave us that $$\frac d{dt}\lVert d+t(u-d)-c\rVert^2_{t=0}<0$$, contradicting our original assumption.
+
+    \item Strict Separation: we can picture "asymptotically approaching" two disjoint sets (even closed) but not possible to have strict separation.
+    \item But, strict separation of a point and a closed convex set (can be seen by considering a small ball around a point). This fact can be used to prove that closed convex set is intersection of half space containing it (use contradiction; consider a point that is not in a set). 
+    \item what about converse? iff holds when one of them is open (just argue that if zero, have both positive and negative).
+    \item \textbf{The notion of "infeasibility" can be translated into two disjoint sets. If these are convex, we may use the existence of separating hyperplane to express in terms of system of equations and reduce to the existence problem (a priori $C$ or $D$ should be open though, and here we end up introducing new parameters $\lambda$ and $\mu$ for hyperplane).}
+    
+    \subsection*{Supporting hyperplanes}
+    \item Supporting hyperplane is kind of like a tangent line at a point. There exists a hyperplane for a point in boundary $c_0$.
+    \item how to prove? use the Fact: if the interior of convex set A is empty, then A must lie in an affine set of dimension less than $n$; and also use the separating hyperplane theorem.
+    \item maybe useful to detect convexity: if a set is closed, has nonempty interior, and has a supporting hyperplane at every point in its boundary then it is convex!
+    \item Digression but might be some interesting fact: $A$ is convex iff $aA+bA=(a+b)A$
+    \subsection*{Dual cone}
+    \item Start from cone, in Euclidean subspace case, it is essentially "orthogonal complement." Intuition is to move the halfspace and find vectors whose halfspace includes the original set.
+    \item We can define different inner product for this. Self dual example: nonnegative orthant, positive semidefinite cone.
+    \item Dual of a norm cone is defined by dual norm. Dual norm here, $\lVert f \rVert$ (linear functional on $X$), is thought of as $f(x)=u^Tx$ (a little confused, \url{https://math.stackexchange.com/questions/1822810/geometric-interpretation-of-the-dual-cone-of-l1-is-l-infty}).
+    \item Dual cone of proper is proper.
+    \item Dual cone is closed as an intersection of half spaces. It is convex for the same reason. $K_1\subset K_2\to K_2^*\subset K_1^*$ (the idea of orthogonal space). For this reason $K^{**}$ is convex hull of $K$.
+    \item $K$ nonempty interior then $K^*$ pointed, and vice versa. The idea is that interior kind of "opens the gap."
+    \item It might be worth to check example 2.25
+    \item When $K$ is proper, $K^{**}=K$. We can also define generalized inequality for dual cone and manipulate (p54).
+    \item Characterize minimum and minimal elements via dual inequalities? (p54)
+    \subsection*{Some remarks on convex function}
+    \item $f^*(y)=\sup_{x\in \text{dom}f}(y^Tx-f(x))$.
+    \item Think in terms of economics. \url{https://math.stackexchange.com/questions/1874482/geometric-intuition-of-conjugate-function}
+    \item It is convex function of $y$ since it is affine.
+    \item Fenchel's inequality ($f(x)+f^*(y)\geq x^Ty$).
+    \subsection*{Conex function}
+    \item Relative interior (continuity)/relative boundary (possible discontinuity): think of embedded 2D 
+    rectangle in 3D.
+    \item Extended function $\tilde{f}$. This automatically defines the domain of $f+g$.
+    \item Definition of indicator function of the set $C$: $0$ and $\infty$.
+    \item Norm is convex.
+    \item Convexity can be shown by looking if $f(x+tv)$ is convex in $t$. Be careful with the domain!
+    \item How to show convexity (concavity)? several ways. One way is to actually expand using some decomposition(spectral theorem twice) of the matrix ($logdet$, sum of $log$ functions, which is concave).
+    \item Convex function $f$ is differentiable iff the derivative value is minimized ("first order Taylor approximation is global underestimator of the function") and the domain is convex(!, think of $1/x$).
+    \item This implies that local property says something about the global property.In order to prove, it is useful to draw tangent line and use two different secants. For the other direction I used the definition. In the general case, apply the above argument to first order reduction.
+    \item Note the computation $\alpha g(x)+\beta g(y)\geq (\alpha+\beta)g(\frac\alpha{\alpha+\beta}x+\frac\beta{\alpha+\beta}y)$
+    \item If twice differentiable, we can say that Hessian is semi-positive definite (strictly positive does not necessarily imply strict convexity, only for quadratic functions).
+    \item Check how to differentiate vectors and how we came up with specific functions. Also, iff directions.
+    \subsection*{Epigraph, homework}
+    \item Epigraph (proof?\url{https://math.stackexchange.com/questions/925835/proof-that-a-function-is-convex-if-and-only-if-its-epigraph-is-convex}): "above the graph." This is really the bridge betweeen convex set and function.
+    \item Schur Complement (p650): $S=C-B^T A^{-1}B$, coming from $\begin{pmatrix}
+I_p & 0\\
+-A_{21}A^{-1}_{11} & I_q
+\end{pmatrix}
+\begin{pmatrix}
+A_{11} & A_{12}\\
+A_{21} & A_{22}
+\end{pmatrix}
+=\begin{pmatrix}
+A_{11} & A_{12}\\
+0 & S
+\end{pmatrix}.
+$
+    $2,2$ entry of inverse is $S^{-1}$, and $\det X=\det A\det S$ (LU decomposition).
+    \item One way to use Schur complement in Convex optimization is to use characterization of semi-definite matrix in page 649 as follows:
+    \begin{itemize}
+        \item $u=-A^{-1}Bv$ minimizes $\begin{pmatrix} u\\v\end{pmatrix}^T\begin{pmatrix}
+            A&B\\B^T&C
+        \end{pmatrix}\begin{pmatrix}
+            u\\v
+        \end{pmatrix}$ so the value is $v^T Sv$
+\item
+        $X \succ 0$ iff $A\succ 0$ and $S\succ 0$.
+        \item If $A\succ 0$ then $X\succ 0$ iff $S\succ 0$.
+        \end{itemize}
+        \subsection*{Examples of Convex}
+        \item $\max\{x_1,\dots,x_n\}$ intuition: think of interpolating.
+     \item Check geometric mean, log-determinant (p74)
+     \item Sublevel set property (sublevel of convex function is convex set).
+     \subsection*{pointwise maximum/supremum}
+     \item $r$ largest sum can be seen as pointwise maximum, which is convex (simple inequality argument, generalized to pointwise supremum, this corresponds to intersection of epigraph).
+     \item Look ex 3.9, 3.10, 3.11
+     \item Convex function can be expressed as a pointwise supremum of affine functions $f(x)=\sup\{g(x)\mid g\text{ affine, }g(z)\leq f(z)\text{ for all } z\}$. Use hyperplane theorem.
+     \subsection*{composition}
+     \item We can generalize $f''(x)=h''(g(x))g'(x)^2+h'(g(x))g''(x)$ for $n>1$ and extend the domain of $h$ (whose domain is a subset of $\mathbb{R}$) when needed.
+    \item Naturally generalized to vector composition case. 
+    $$f''(x)=g'(x)^T \nabla^2 h(g(x))g'(x)+\nabla h(g(x))^T g''(x)$$
+    \item analogue to supremum; $f$ is convex and $C$ is convex then $g(x)=\inf_{y\in C} f(x,y)$ is convex provided that $g(x)>\infty$. I feel like there is a lack of motivation to this section, so I need to look back at this again later.
+    \subsection*{Convex Optimization Problems}
+    \item Setup. $\epsilon$-suboptimal if there exists a feasible point $x$ with $f_0 (x)\leq p^* +\epsilon$
+    \item Locally optimal: $x$ solves the minimization problem around some feasible point $z$ (add the condition $\lVert z-x\rVert_2\leq R$).
+    \item Notion of active and inactive with regards to $f_i$. Notion of equivalence (not necessarily the same optimal solution), p131.
+    \item Change of variables; one-to-one, image covering the problem domain $D$.
+    \item Usage of slack variable (why?...)
+    \item We can eliminate equality constraints: device a function $\phi$ corresponding to $h_i$ (there exists $z$ such that $\phi(z)=x$ iff $x$ is a solution): intuition is that $\phi$ always subsumes all constraints regarding $h$ so we're good. We added more information, so it makes sense that we decreased the variables.
+    \item We can introduce equality when necessary as well.
+    \item "objective and inequality constraints are independent": involve different optimization variables. 
+    \item We can partition the coordinates.
+    \item Epigraph problem form: obvious transformation; just added variable $t$, but we can interpret geometrically.
+    \item implicitly restrict the domain, and the value is same as $f_0$ in that domain.
+    \item When restricting the domain, we may have get additional non-differentiability, because maybe the domain is not open. With the compensation of differentiability we can make a problem explicit (p135).
+    \item Parametrized/Oracle(values given by query, know only SOME information about the objective function) model.
+    \subsection*{Convex Optimization}
+    \item Equality constraint must be affine!!
+    \item Intuition for optimality condition: inner product with the arrow toward feasible points is positive ($\nabla f_0 (x)^T (y-x)\geq 0$ for all $y\in X$)
+    \item Feasible set is convex as an intersection of convex sets.
+    \item Quasiconvex if its domain and all its sub-level sets are convex.
+    \item For convexity of the set, we can use sub-level set.
+    \item $\{x\in\mathbb{R}^n_+\mid G(x)\geq \alpha A(x)\}(0\leq \alpha\leq 1)$, where $G$ and $A$ are geometric mean/arithmetic mean.
+    \item Minimization: page 140, why did we say the domain is open when unconstrained; it is, of course. What matters is that the neighborhood of optimal point is feasible.
+    \subsection*{Duality}
+    \item Definition of (Lagrange) dual function. This is a function defined in the range of all constraint functions, really nothing to do with feasibility.
+    \item dom $g$ is a pair $(\lambda,\nu)$ whose $g$ value is not negative infinity. Also, $\lambda>0$ should hold in order for lower bound property to be nontrivial ($g(\lambda, \nu)\leq p^*$). Note that $g$ does not depend on $x$!
+    \item Whence necessary, we can express $g$ implicitly by dividing the domain (p225).
+    \item Replacing hard constraint (indicator) with soft constraint (under-estimator).
+    \item So the question is, how would our dual value strictly less than primal value? Intuitively, if we put $\lambda=0$, then we get the best possible value. 
+    
+    \subsection*{Lagrange Dual Problem}
+    \item primal problem(original problem), dual feasible($\lambda\succeq 0,g(\lambda,\nu)>\infty$), dual optimal
+    \item In the case dom $g$ has a dimension smaller than $m+p$, we can take affine hull of it. Implicit equality constraints and turn into linear problem.
+    \item Optimal value is denoted by $d^*$.
+    \item Weak duality: $d^*\leq p^*$ (holds even for nonconvex problems).
+    \item Optimal duality gap: $p^*-d^*$.
+    \item Since dual problem is convex, sometimes we can get a lower bound easily.
+    \item Strong duality holds.
+    \item relint A=$\{x\mid \text{aff} C\cap B(x,r)\subset C\}$. 
+    \item If there exists a strictly feasible relative interior point, then strong duality holds for convex problem (affine inequality does not need to hold with strict inequality), called "Slater's constraint qualification."
+    \item when not feasible, we get $d^*=-\infty<+\infty=p^*$
+    \item $b\not\in R(A)$ then the dimension of kernel of $A^T$ is not zero, which justifies that there exists $A^Tz=0,b^Tz\neq 0$. This proves that $d^*=0$.
+    \item If both primal and dual are infeasible for LP, then $d^*=-\infty$ and $p^*=\infty$.
+    \item Complementary slackness: we are already supposing that the gap is zero. Then: $x^*$ minimizes $L(x,\lambda^*,\nu^*)$ and $\lambda_i^*f_i(x^*)=0$
+    \subsection*{Relationships with conjugate functions}
+    \item If we know conjugate function, we can get dual function easily. \url{https://math.stackexchange.com/questions/1874482/geometric-intuition-of-conjugate-function}
+    \subsection*{KKT optimality conditions}
+    \item If strong duality holds and all constraints are differentiable then KKT condition must satisfy. The converse holds for convex primal problem. 
+    \item So, Slater's condition + Convex optimization problem + differentiable constraints and objective functions implies that gap is zero iff KKT holds.
+    \item How do we know that $\lambda\geq 0$ guarantees that $L$ is convex? Also, what property did we use to show that the gradient is zero in the minimization point? Well, we can verify by using the first order condition, $f(y)\geq f(x)+\nabla f(x)^T (y-x)$.
+    \item Note that $\lambda_i f_i(x)=0$ for every $i$.
+
+
+
+    
+    \subsection*{remarks}
+    \item Useful semidefinite positive note. \url{https://math.stackexchange.com/questions/391852/positive-semidefiniteness-of-a-block-matrix-of-positive-semidefinite-matrices}
+    \item Why does the bounded level set property show the existence of optimal value?
+    \item 
+    \end{itemize}
+
 \newpage
-\section*{Digression}
-\subsection*{Hahn-Banach}
 \end{document}
