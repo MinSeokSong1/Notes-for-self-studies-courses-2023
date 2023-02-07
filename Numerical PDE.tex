@@ -58,11 +58,11 @@ Note that for a finite Euclidean vector space, for every bilinear form we can fi
 
 \item Symmetric, positive bilinear form is exactly vector space.
 \begin{lemma}
-There exists a unique $v_0\in H_0$(closed subspace of Hilbert) such that $\lVert v-v_0\rVert=d(v,H_0)$.
+There exists a unique $v_0\in H_0$(closed subspace of Hilbert) such that $\lVert v-v_0\rVert=d(v,H_0)$ (minimizes).
 \end{lemma}
 
 \item Using this, we can show that $v=v_0+v_{0,\perp}$ where $(v_{0,\perp},H_0)=0$.
-(parallel equation? check.)
+(uniquely decomposed, parallel equation? check.)
 
 \end{itemize}
 \section*{Lecture 2}
@@ -74,7 +74,7 @@ $https://math.mit.edu/~stevenj/18.335/norm-equivalence.pdf$, but the constant de
 \begin{theorem} (Riesz Representation Theorem) We have $H=H^*$ in the sense that $\lVert L\rVert_{H^*}=\lVert u\rVert_H$. Here we used sup norm. For every $L\in H^*$, there exists $u\in H$ such that $L(v)=(v,u)$ for every $v\in H$.
 \end{theorem}
 \begin{theorem}
-(Rudin p40, recast) "we can find some measure" that represents linear functional. $L(f)=\int_X f d\mu$ for every $f$.
+(Rudin p40, recast) $X$ is not necessarily Hilbert, but locally compact Hausdorff space. We also consider positive linear functional on $C_c (X)$ (compactly supported complex functions). "we can find some measure" that represents linear functional. $L(f)=\int_X f d\mu$ for every $f$.
 \end{theorem}
 \begin{proposition}
 (Stein and Shakarchi p13, recast) For every bounded functional $l$ on $L^p$ there exists $g\in L^q$ so that $l(f)=\int_X f(x)g(x)d\mu (x)$ for all $f\in L^p$. Moreover, $\lVert l\rVert_{B_*}=\lVert g\rVert_{L^q}$.
@@ -93,18 +93,19 @@ If $A$ is symmetric, $\alpha=\lvert \lambda_n\rvert = \sigma_n$. Note that symme
 \end{example}
 Important note for symmetric positive definite matrix (\url{https://math.stackexchange.com/questions/1808799/positive-definite-if-and-only-if-determinants-are-positive}).
 \begin{theorem}
-Let $a$ be positive symmetric bounded bilinear form. If and only if condition for the solution $u$ where $a(u,v)=L(v) : F(u)\leq F(v)$ for some function $F(v)=\frac 12a(v,v)-L(v)$ for every $v\in H$.
+Let $a$ be \textbf{positive definite symmetric} bounded bilinear form. Solution for $a(u,v)=L(v)$ exists iff $v=u$ minimizes $F(v)=\frac 12a(v,v)-L(v)$, $v\in H$.
 \end{theorem}
 \begin{theorem}
 (Lax-Milgram)
-Inner product on $H$ is not the same as bilinear form. Aso, there is no relationship whatsoever between bilinear form and linear functional except that they are on the same space. $u$ is unique
+There is uniqueness.
+If $a$ is bounded, $\alpha-$coercive, bilinear form and $L$ is a bounded linear functional on $H$ then solution exists with some boundedness of $u$ by $L$ with coefficient $\alpha$.
 \end{theorem}
 \item Think of $L$ as an input, $u$ as a solution.
 
 \section*{Lecture 3}
     \item $\partial\bar\partial u(x_j)=u''(x_j)+O(h^2\lVert u\rVert_{C^4})$ ($C^k$ norm here is a max of sup of each derivatives upto $k$) by Taylor approximations. How do we come up with this? I don't know. ($U_j=\frac{U_{j+1}-2U_j+U_{j-1}}{h^2}$)
     $u''(x_j)=\bar\partial\partial u(x_j)+\bar\partial O(h)+O(h)$???
-    \item Due to floating point error, the smallest $h$ does not necessarily give the smallest error ($\frac \epsilon h$).
+    \item Due to floating point error, the smallest $h$ does not necessarily give the smallest error (($\frac{u(x_{j+1})-u(x_j)}{h}+\frac{\epsilon_1-\epsilon_2}{h}$)).
     
     \item Indeed, $(A_h)_j=-a_j\partial\bar\partial$, $j=1,\dots, M$.
     \item Essentially, we switched to matrix form, and reduce it to $-D_a LU=F$. D for diagonal, L is for operator, U is obvious.
@@ -124,10 +125,146 @@ Inner product on $H$ is not the same as bilinear form. Aso, there is no relation
     \item The goal is to make discretized function approximate to the analytic in $L^2$. To this end, we change $l^2$ and inner product so both converge nicely.
     \item analogous result holds for 2d case. 
 
-\subsection*{Higher dimension($\geq 2$)}
+\subsection*{Lecture 5}
+    \item Condition number can be seen as "how much $A$ stretches and compresses vectors."
+    \item Weak derivative does not always exist. If all weak derivative of $n$'th order exist, then all weak derivatives less than $n$ exist. Sobolev norm is defined by the square root of the sum of squares of $L^2$ norms. $H_0^1$ is a completion of compactly supported smooth functions in $H^1$.
+    \item LHS involves $v'$ (and $v$) and RHS involves $v$; reduced to $a(u,v)=L(v)$. This is on $H_0^1$.
+    \item not sure why $\lVert v'\rVert\leq\lVert v\rVert$ in $H^1_0$.
+    \item Poincare inequality: original function bounded by its gradient (a bit sloppy).
+    \item $f\in L^2$ since $L^2$ is closed under multiplication.
+    \item Finite element method: discretize the function in a global sense! We have then the flexibility with the choice of $v$, that will ease the computation (this may be why we use it).
+    \item Accuracy; Basically good algorithm. How close is our subspace to the original space in representing a true solution $u$. A should be well-conditioned. Both are inherent to the "algorithm." (easy to compute?)
+    \item Easy to compute.
+    \item Reduced to $AU=F$ (errata, $g$ should be $u$, $A$ is tridiagonal, so easy to solve)
+    \item This is in fact $-\partial\bar\partial U_j=h^{-1}(f, \phi_j)$, that is, the "average" of $f_j$.
+    \item Finitely many intervals, hence finite element method.
+    \item By $a$ in page 4, it means the function $a(x)$.
+    \item Matrix $A$ will be same as in finite difference method, but RHS will be different.
+    \item On page 5, I don't understand the $L^1$ norm, and the idea of the proof at all.
+    \item I think it is saying that $A$ is tri-diagonal in general.
+\subsection*{Lecture 8}
+\item What is the point of bounding $f_k$? Then we can bound $\alpha_k$.
+\subsection*{Lecture 9}
+\item We are solving ODE $u'(t)+au(t)=f(t)$ (can extend to when $a$ is matrix and $u$,$f$ are vectors).
+\item Duhamel's principle: think as if we are starting afresh at each time. This is like solving homogeneous equation each time. The homogeneous solution + Integrate from $0$ to $t$ a solution for different IVP where initial value is $f$, that is, $ve^{-at}+\int^t_0e^{-a(t-s)}f(s)ds$
+    \item what is E? I don't know. I can't find it in the book...
+    \item What do you mean that $\lambda$ is a complex number?
+    \item My understanding is that when $nh$ is small, ODE does not make sense, even though numerically it is stable (converge?).
+    \item The reason we sometimes prefer backward Euler method: does not need to solve nonlinear equation (versus for forward and Crank-Nicholson, we needed $f (t_{n+1},u_{n+1})$).
+    \subsection*{Error analysis on the book}
+    \item Thm 5.1 says that $u_h$ is an solution that is closest to $u$ in "energy norm."; used Cauchy Schwrtz of inner product in inequality.
+    \item when $v(0)=v(1)=0$, we have $L2$ norm of a function $\leq$ $L2$ norm of derivative, explaining $\lVert v\rVert_a\leq C\lVert v'\rVert$. It follows that the derivative of error is bounded by the original function. This is used in the convergence in Thm 5.2.
+    Q: do we know that this is a tight bound?
+    \item finite element: second derivative, finite difference: fourth derivative.
+    \item Just be careful $\lVert \rVert_2$ is not $L_2$ norm.
+    \item (p56) do not understand $\partial\bar\partial u(x_j)$
 
-
+\subsection*{Chapter 2}
+\item Strong maximum principle says that if interior has maximum then it is constant on the domain - gives uniqueness.
+\item Thm 2.1: why is linear term not so special?
+\begin{itemize}
+    \item essentially second order term dominates the first order term. 
+\end{itemize}
+    \item Idea of the proof (i): first prove the case $Au<0$ (use the fact that in maximum point, two derivative is nonpositive). In the case $Au\leq 0$, we perturb little by $v$ with $Av<0$ and $v\leq 0$ ($v=e^{\lambda x}$, with large enough $\lambda$). 
+    \item Idea of the proof (ii): we use the fact that $c\leq 0$. Pick the maximum interior point and construct largest subinterval containing $x_0$ in which $u>0$. Apply the part (i) onto $Au-cu$, which does not have any linear term.
+    \item The little subtlety is that, $a$, $b$, $c$ depends on $x$.
+    \item The stability condition (changing the data, i.e. changing A does not change the solution that much) in theorem 2.2 is derived by finding $g$ such that $A(u(x)+g(x))\leq 0$.
+    \item Using strong maximum principle, monotonicity property can be derived (p18).
+    \item In theory of ODE we said that there exists unique solution involving $u^{n}$ with boundary conditions up to derivatives of $n-1$. (\url{https://en.wikipedia.org/wiki/Ordinary_differential_equation})
+    \item We get an explicit formula using Green's function. In order to show $\kappa$ is constant, we differentiate it to find its value being zero, and use the theory in ODE to see that it's positive at $0$.
+    \item Using $g$, we get a precise constant for Thm 2.2.
+    \item For general boundary, we can use $\bar u(x)=u_0 (1-x)+u_1 x$.
+    \item trivial fact: $C_0^1$ is dense in $H_0^1$. we can extend from $C_0^1$ to $H_0^1$ due to Cauchy Schwartz, and because the operators $a$ and $L$ involve integration.
+    \item Poincare inequality involves $H_0^1$. It says that $\lVert v\rVert\leq C\lVert \nabla v\rVert$ for every $v\in H_0^1$. For the special case, we said that $\lVert v\rVert\leq \lVert v'\rVert$, proven by Cauchy-Schwarz (convert $v=\int v'$ to $1^2\cdot v'^2$).
+    \item Coercivity is proven by minimality of $a$.
+    \item Boundedness is proven by clever Cauchy Schwarz($\mid v'w'\mid+\mid v'w\mid+\mid vw\mid, \lVert v\rVert_1\lVert w\rVert_1$).
+    \item not sure about the computation in p 21
+    \item $\lVert u\rVert_1\leq C\lVert f\rVert$ follows by coercivity (nice direction of inequality going from sobolev-1 norm and bilinear form $a$).
+    \item Lax-Milgram concerns Hilbert space, which $H_0^1$ is.
+    \item $f\in L_2$ is enough, which is used to prove that $L$ is bounded.
+    \item When b=0, $a$ is symmetric positive definite (check).
+    \item Discussion about $H^2$ regularity: we used the fact that $a$ is smooth and $f\in L_2$. For example when $f\in H^{-1}$ (dual of $H_0^1$, in which case the seminorm for 1 becomes the norm, used in the definition!) $u$ may not be a strong solution.
+    \subsection*{Chapter 3}
+    \item Equation is analogous to the one in chapter 2. $$Au:=-\nabla \cdot (a\nabla u)+b\cdot\nabla u+cu=f$$ called Dirichlet problem. Here, we set $g$ as a boundary value.
     
+    (c is positive, a is bounded below, what do you mean by smooth boundary?, here we restricted to $(a_{ij})=aI$)
+    \item $a=0, b=0, c=0$ is a poisson equation, $-\Delta u=f$
+    \item Boundary condition can be Neumann + Dirichlet (called Robin).
+    \item Maximum principle
+
+        \item 1) Idea of maximum principle: same idea of compensating equal sign by arbitrary function $e^{\lambda x_1}$ for some large $\lambda$. The reason that $v=Au+\epsilon A\phi$'s maximum is achieved in the interior is because $\phi$ is bounded in $\Omega$, so we can adjust $\epsilon$ to not exceed the maximum value. 
+        \item The second statement says that the maximum cannot be positive. We considered the largest possible open set containing some positive point $x_0$ and applied part (i).
+    \item page 27, a little imprecise. We needed absolute value of $v$ on the boundary. But the idea is to find $\phi$ so we can use the previous theorem. Intuitively, we need $\phi\geq 0$(needed for $u\leq v$) and $A\phi\leq -1$(needed to argue that $Av$ is nonpositive).
+    \item Poisson integral formula gives the solution for $-\Delta u=0$ with $g$ on a circle boundary, in 2d case.
+    \item Change of variable formula for laplacian: $\frac{\partial^2 v}{\partial r^2}+\frac 1r\frac{\partial v}{\partial r}+\frac 1{r^2}\frac{\partial^2 v}{\partial \phi^2}$
+    \item We consider the fourier series of $g$ on the boundary.
+    \item $R$ is the radius of the boundary. $r$ and $\phi$ are our variables "$g$ appropriately smooth" concerns Fourier series of $g$. For example, coefficient power series is bounded by $L_2$ norm of the function. The idea of Thm 3.3 is to construct a nice function, use it as a building block for Fourier series, and get a coefficient using boundary condition.
+    \item Plug in $r=0$ (value at the "origin"); $P_R=1$ so we are only left with $g$ on the boundary, proving the mean value property. This is a special case of strong maximum principle (but is why connectedness assumption for $\Omega$ plays a role here).
+    \item ($u, A\phi$)=($f,\phi$) because the linear term $cu\phi$ survives without any IBP. 
+    \item Fundamental solution is essentially any solution that has singular value at $0$ but its integration does not blow up. In the sense of weak derivative, we have $AU=\delta$ (i.e. ($u,A\phi)=\phi (0)$)). We also have some boundedness of all derivatives (why?).
+    \item \textbf{Thm 3.4?}: not completely sure (justification of $C^2$, specifically differnetiation under integration), but we could use Fubini (since $f$ and $\phi$ are nice) to get $(u,A\phi)=(f,\phi)$. Then we said that $u\in C^2$ and so by integration by parts, we know $(Au,\phi)=(u,A\phi)$. Combining these yields $Au-f=0$
+    \item The point is to realize that convolution makes it more smooth.
+    \item We have fundamental solutions for $d=2,3$. We used here $\lim_{\epsilon\to 0}\int_{\mid x\mid>\epsilon}$ (check Green's formula, page 31)
+    \item Convoluting with $f$ yields the solution for Poisson PDE with $0$ boundary.
+    \item We can also derive a solution for Laplacian with a certain boundary, which is unique.
+    \item Now, for the general $A$, weak formulation is always an extension of the original problem (depending on the data $f$ and the domain $\Omea$).
+    \item Note that we only needed $f\in L_2$.
+    \item Theorem 3.6: existence of a weak solution $$Au:=\nabla\cdot(a\nabla u)+b\cdot\nabla u+cu=f$$, \textbf{vanishing on the boundary}, with $a(x)\geq a_0>0, c(x)-\frac 12\nabla\cdot b(x)\geq 0$.
+    \item (Thm 3.6) Stability for weak formulation. Lax-Milgram says that $u$ exists (for weak formulation $a(\cdot,\cdot)=L(\cdot)$). $L$ is bounded by using Cauchy Schwarz multiple times. $L$ is bounded by $f$ due to Poincare inequality, which applies for $H_1_0$. Now $\mid u\mid_1\leq C\lVert f\rVert$ follows by combining these two (stability).
+    \item In the case $b=0$, we have positive definite and symmetry of $a$ so nice Dirichlet's principle holds (Thm 3.7, characterization, iff condition, of a weak solution, that is, when $F$ is minimized).
+    \item Inhomogeneous boundary condition, $u=g$ on $\Gamma$: used trace operator. page 35?
+    \subsection*{Chapter 4}
+    \item Just mindful about the nice cancellation for difference approximations of derivatives. We have better cancellation for central methods (coeffiacient of $u_i$ is the largest) as the number of terms in the denominator minus the order of denominator plus one. we have $a_j\pm \frac 12 hb_j$ and $A_hU_j\leq 0$ (since we deal with linear, we do not need any sophisticated method). Just use the intuition that the maximum cannot be achieved in the middle point by thinking average.
+    \item (p48) Use linear interpolation; roughly speaking, $l_h u_j=0$ in $w_h$ and $U=0$ on $\Gamma_h$ mean that we have zero in the rims and linearly interpolate in the in-homogeneous parts.
+    \item how to prove $\partial\bar\partial u-\partial^2 u/\partial x^2\leq Ch^2\mid u\mid_{C^4}$? Taylor series with remainder! $h^2$ due to central method, $C^4$ due to nice cancellation.
+    
+    \item Lemma 4.1: think why
+    \item Invertible due to diagonal dominance for $h$ small
+    \subsection*{Chapter 5}
+    \item $u_h$ is the one we get by solving $AU=b$ and $I_h$ is a function in $S_h$ that follows true $u$.
+    \item This is called "finite element method," a special instance of Galerkin's method(replace $H^1_0$ with the finite dimensional subspace)
+    \item $a(\cdot,\cdot)$ means that it is inner product!
+    \item I was just confused about how $\lVert\rVert_{2,K_j}$ sums up to $\lVert\rVert_2$.
+    \item $\partial\bar\partial$ equality is nicely cancelled when we use definition.
+    \item In fact, $I_h$ and $u_h$ are identical in our specific case
+    \item confused about $\phi_{ij}$ on page 56. Subinterval of interval (picture is illustrative). We include all polynomials whose degree is less than $k$.
+    \subsection*{triangulation}
+    \item $\phi_i(P_j)=1$ if $i=j$, $0$ if $i\neq j$.
+    \item may use polynomial of degree $k$. In this case we need different number of nodes as before (page 59).
+    \item We might get some trouble when $\Omega$ is a smooth curve. Triangulation method enables a flexible way to approximate $\Omega$.
+    \item $\tilde S_h$ is just a generalization of $S_h$, where it does not necessarily vanish on the boundary.
+    \item If the angles are bounded below, then we have$$\lVert I_h v-v\rVert\leq Ch^2\lVert v\rVert_2$$ for every $v\in H^2$, for piecewise linear case.
+    \item barycentric method: use only the value of barycentric. nodal method: average out three values of each nodes.
+    \item Check the discussion on convex set and orthogonal projection.
+
+    \subsection*{Bramble Hilbert Lemma}
+    \item Approximation by polynomial.
+       \item In Bramble Hilbert Lemma: Lipschitz domain means that it is locally the set of points located above the graph of some Lipschitz function.
+       \item Our ultimate goal is to change from norm to seminorm. 
+       \item $\lVert v-q\rVert_{W^{k,p}}\leq  C_0\mid v\mid_{W^{k.p}}$. Remember that we had $\int D^\alpha (v-q)dx=0$ and $q$ is a polynomail of degree less than equal to $k-1$.
+       \item \textbf{Sobolev inequality}: when $k>d/2$, $H^k(\Omega)\subset C(\bar\Omega)$ (have a bound accordingly). Big $k$ means many restrictions, so better be regular.
+           \item Bound of $\lVert I_h v-v\rVert$: Order of approximation of $I_h v$ depends on the regularity of the function $v$.
+           \subsection*{Chapter 7}
+        \item Notion of solution operator.
+        \item derivative under infinite sum. Why were we able to do it? (p96)
+        \item Integrand of $\int ^t_0 E(t-s)f(s)ds$ can be interpreted as a solution at $t-s$ when the initial value is $f(s)$.
+        \item In general when $a=a(t)$, we have $\int^t_0 E(t,s)f(s)ds$ where $E(t,s)=exp(-\int^t_s a(\tau)d\tau)$, we cannot take $a$ outside the integral. In this case we introduced two variables. Think of $E(t,s)$ as an operator that takes the solution of $u'+A(t)u=0$ from $s$ to $t$. In other words, $u(t)=E(t,s)u(s)$.
+        \item Usually we generalize scalar case to matrix case. Unstable if $a$ is negative. For matrix case, unstable if the smallest eigenvalue(think $\exp{-t\lambda_1}$, our norm of exponential of $-tA, as $t\to\infty$) is negative. 
+        \item $\cos B=\frac 12(e^{iB}+e^{-iB})$ is an operator. Similarly for $\sin B$. We can change $u''+Au=0$ into two equations by substituting $v=u'$.
+        \item Euler's method: Iteratively approximate the value.
+        \item "if K is larger, $U_n$ grows with $n$, what do you mean? It means that when $1-ak$ is less than $-1$ then we get in trouble. That is why stability condition is $ak\leq 2$.
+        \item Error is given by $O(k)$, but only when $ak\leq 2$ (step size is small compared to $a$), noting that $1-x-e^{-x}\leq \frac12x^2$.
+        \item $t_n=nk$, so $2t_na^2k\mid v\mid=C(t_n,a)k\mid v\mid$. Same for backward Euler error, noting that $$\mid\frac1{1+x}-e^{-x}\mid\leq 2x^2, x\geq 0$$
+        \item We get an error bound O($k^2$) for Crank-Nicolson(because $\mid\frac{1-\frac12x}{1+\frac12x}-e^{-x}\mid\leq x^3$), better than O($k$) for forward/backward Euler method.
+        \item For backward error, we can show an error $O(k)$ independent of the coefficient $a$. Trick is to bound the exponential function by fractional function, and vice versa (compare $ak$ with $1$).
+        \item Unsure about the computation.
+        \item When $A$ is not well-conditioned backward Euler method can be useful. 
+        \item For second order ODE, implicit is more stable. We can also make stable irrespective of $a$ by using $$\frac{U^{n+1}-2U^n+U^{n-1}}{k^2}+a(\frac 14 U^{n+1}+\frac 12U^n+\frac 14U^{n-1})=0$$(typo?) 
+        \item Symmetry increases accuracy in general. Implicit method is in general better.
+        \item not completely sure why norm $1$ and distinct solutions guarantee stability.
+
+        \item Just a bit confused about the idea of stability. For analytic solution, stability means that solution is not affected by the perturbation of our input sources as $t\to\infty$. For stability of computational solution, it means that we actually have convergence to the analytic solution, that it does not blow up.
+        \item $a$ can be complex number or a matrix. $k$ is a step size, which is always positive. We are concerned with $\lambda=ak$. The real part of $\lambda$ determines the stability of analytic solution simply because step size is always given by positive value.
 \end{itemize}
 
 
@@ -172,7 +309,7 @@ $$u(x-h)=u(x)-hu'(x)+\frac 12h^2u''(x)-\frac 16h^3 u'''(x)+O(h^4)$$
 \item Method of undetermined coefficients: the objective is to approximate $u'$ by using specific non-differential terms. We can let $a_i$ as the coefficient for these. (~page 9)
 
 \subsection*{Stability, Consistency, Convergence}
-    \item Stability: the error does not get amplified.
+    \item Stability: the error does not get amplified (for example, maximum principle for the solution).
     
     \item Consistency: Scheme should tend to the differential equation.
 
@@ -190,14 +327,54 @@ $$u(x-h)=u(x)-hu'(x)+\frac 12h^2u''(x)-\frac 16h^3 u'''(x)+O(h^4)$$
 
 (2) overflows and underflows: exponent too big/small
 
-(3) cancellation errors: due to roundoff error we may get an inaccurate result.
+(3) cancellation errors: due to roundoff error we may get an inaccurate result. 
 
 \item For $Ax=b$, if we know the upper bound of relative error for $A$ and $b$, We may get an upper bound of relative error.
 \item Stability is about algorithm (input and output), condition is about modelling (in order to formulate the mathematical problem).
 \item Well-posed problem if uniqueness and existence hold. Otherwise, it is ill-posed. 
 \item \textbf{The condition number of an instance of a problem is the reciprocal of the normalized distance to the nearest ill-posed instance.}
-$\min_{X\in M}\lVert A-X\rVert=\frac 1{\lVert A^{-1}\rVert}$ follows directly by Eckart-Young (rank$X\leq r-1$ case). Note that this is a minimal SINGULAR value!
+$\min_{X\in M}\lVert A-X\rVert=\frac 1{\lVert A^{-1}\rVert}$ follows directly by Eckart-Young (rank$X\leq r-1$ case, square sum after $r$). Note that this is a minimal SINGULAR value!
+\subsection*{Boundary $C^k$}
+\item Boundary is called $C^k$ if for every point on the boundary, we can construct some appropriate function $\gamma:\mathbb{R}^{n-1}\to\mathbb{R}$ that sort of matches with the boundary. Precisely, $$U\cap B(x^0, r)=\{x\in B(x^0, r)\mid x_n >\gamma(x_1, \dots, x_{n-1})\}$$
+\subsection*{Green's formula}
+\item First, normal derivative is defined by $\frac{\partial f}{\partial n}=\nabla f(x)\cdot n$, outward pointing.
+\item Start with $$\int_U u_{x_i}dx=\int_{\partial U}uv^i dS (i=1, \dots, n)$$
 
+then we can derive a divergence theorem $$\int_U \text{div} udx=\int_{\partial U}u\cdot \nu dS$$
 
+Applying it to $uv$, we get IBP, $$\int_U u_{x_i}v dx=-\int_U uv_{x_i}dx+\int_{\partial U}uv\nu^i dS$$
+
+it follows that, by taking $v=1$ in IBP, $$\int_U \Delta udx=\int_{\partial U}\frac{\partial u}{\partial v}dS$$
+
+by taking $v\to v_i$ in IBP, we get $$\int_U Dv\cdot Du dx=-\int_U u\Delta vdx+\int_{\partial U}\frac{\partial v}{\partial \nu}udS$$
+
+Interchanging $u$ and $v$ and subtract, we get $$\int_U u\Delta v-v\Delta u dx=\int_{\partial U}u\frac{\partial u}{\partial \nu}-v\frac{\partial v}{\partial \nu}dS$$
+
+how is it really related to Green's theorem in Cal3? I really don't know...\url{https://math.stackexchange.com/questions/74843/when-integrating-how-do-i-choose-wisely-between-greens-stokes-and-divergence}
+\subsection*{Trace Operator}
+\item Question: Can we extend a function to the boundary and still make it be in the same functional space? Boils down to finding the existence of the norm $\lVert\gamma v\rVert_{(\Gamma)}\leq C\lVert v\rVert_1$ for every $v\in C^1 (\bar\Omega)$
+\item Lemma A.1: Function is bounded by Sobolev 1 norm (used Cauchy Schwarz).
+\item (p236) Trace theorem says that we can uniquely extend $W^{1,p}$ in the domain $\Omega$ to its boundary in $L_2=p$ sense. I am wondering if we can say the trace is "well-defined" irrespective of the norm we use.
+\item Now we define $H^1_0(\Omega)=\{v\in H^1(\Omega):\gamma v=0\}$. Since $\gamma$ is bounded from above inequality, this is a closed subspace (closed subset of complete space is complete, so this is a Hilbert space as well).
+\item Poincare: $\lVert v\rVert\leq C\lVert\nabla v\rVert$ for every $v\in H^1_0(\Omega)$, giving the equivalence with the semi-norm (which we use for the definition of dual).
+\subsection*{Office hours}
+\item For estimating $I_h-u$, we first used stability theorem for stability. We go from energy norm to $\lVert\dot\rVert_1$ norm. 
+\item $\mid f_k\mid$ is really an error since its convergence measures the magnitude of coefficients.
+\item Rectangles - too many neighboring points, so too many degree of freedom. Particular structure of triangular due to our structure of subspace.
+\item Relationship between Taylor series and Brandle-Hilbert Lemma.
+\item Fourth order limit due to $h^2$.
+
+\subsection*{remarks}
+\item Coercivity due to $a>c$, boundedness of $a$ due to Cauchy-Schwartz, boundedness of $L$ due to Poincare inequality. We needed $f\in L^2$ (this is specifically for using $H_0^1$ norm, which is just $L_2$ norm of the derivative).
+\item Question: how do you use Green's function?
+\item Sobolev inequality only concerns continuity.
+\item parabolic looks like we have lower "degree" so it makes sense that delta is zero.
+\item Taylor expansion of $f$ centered at the Barycenter and the exactness implies that the linear term vanishes if we intergrate over $K$!
+\item Question: for Bramble Hilbert, the reason for the change of variable is to get the extra factor $h^2$? For 1d, it makes sense that we use the lemma on an interval because we have a linear function. But on triangle, we do not have a polynomial. How do we resolve that issue?
+\item Is Bramble Hilbert lemma somehow related to Taylor's theorem? Since I don't have a good intuition of it, we seem to be able to prove 1d case by using Bramble-Hilbert or Taylor's series.
+\item Just not entirely sure about the second approach in the problem. He seems to have used change of variable for the first inequality, then I'm not entirely sure where he used Bramble Hilbert since we needed seminorm somewhere.
+\item To prove Friedrich's inequality, we had to use this function $\phi$ and use integration by parts. We needed a little trick by first using Cauchy-Schwartz and then used the fact $ab\leq\frac{a^2+b^2}{2}$.
+\item Poincare says that we do not change like crazy for $H^1_0$ since it vanishes at the boundary. Proof by Cauchy-Schwarz.
+\item
     \end{itemize}
 \end{document}

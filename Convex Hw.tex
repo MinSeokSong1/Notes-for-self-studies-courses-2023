@@ -35,45 +35,17 @@
 \newtheorem{example}{Example}
 \newtheorem{remark}[example]{Remark}
 
-\title{Algorithm}
+\title{Convex Optimization hw}
 \author{MinSeok Song}
 \date{}
 
 \begin{document}
-\maketitle 
-\section*{Divide and Conquer (and merge)}
+\maketitle
 \begin{itemize}
-\item General idea: expand out or recursion tree (and show monotonicity using induction)
-
-(example) multiplication algorithm; $T(n)=3T(n/2)+8n$
-\item Notation: $f(n)=w(g(n))$: $f(n)>g(n)$
-
-$f(n)=\Omega(g(n)):f(n)\geq g(n)$
-
-$f(n)=\Theta(g(n)): f(n)=g(n)$
-
-etc
-
-\item Sorting algorithm: Merge sort ($T(n)=2T(n/2)+\Theta (n)$), insertion sort ($\Theta(n^2)$ in the worst case, $\Theta(n)$ on sorted inputs)
-
-\item Solving recurrences: substitution method(and induction), recursion-tree method, master method.
-
-\item Master Method
-\section*{Dynamic Programming}
-
-\item Fibonacci, 0-1 Knapsack, Matrix Chain Multiplication, Longest Common Subsequence, 
-\item
-Bottom-up iterative version - solutions have to be tabulated. (for b=0 to W and i=1 to n)
-
-Top-down recursive version - \textbf{check if solution was already computed.} (initialize everything to "?" the check using if statement), need to do memoization.
-
-\item knapsack M(b,i): capacity b, using a subset of the first i items only.
-
-(p5, lec10) what is Catalan number?
-
-\item 
-
+\item why is the last coordinate negative? I don't know...
+\item Seems like we need to use some kind of derivative but IDK man, page 85
+\item how the hell do I use Schur complement? I don't know.
+\item Why does the bounded level set property show the existence of optimal value?
 \end{itemize}
-
 
 \end{document}

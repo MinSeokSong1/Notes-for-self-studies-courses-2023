@@ -51,11 +51,28 @@
 There is a discussion of why this is so. $https://math.stackexchange.com/questions/44907/whats-going-on-with-compact-implies-sequentially-compact$ Questionz; don't we need to consider "Any" subsequence in the set $\{f_i\}$? I don't understand the product topology on $\{0,1\}^{[0,1]}$
 \item Continuity implies sequential continuity, but not the otherwise. 
 \item Bolzano Weierstrass (bdd sequence has convergent subsequence) for $\mathbb{R}^2$ case can be proved by bisecting a square sequentially and using the completeness of $\mathbb{R}^2$.
-\end{itemize}
 
-\subsection*{Lecture 2}
-\subsection*{Lecture 3}
+\subsection*{Lecture 6}
+\item $L^1$ and $L^\infty$ not dual to each other ($L^\infty$ is larger).
 
+\begin{lemma}
+Q: how can we acquire $q$ norm of $g$? When we know that it is in $L^q$ or only know that it is integrable on finite measure...
+
+(i) $g\in L^q\to \lVert g\rVert_{L^q}=\sup_{\lVert f\rVert_{L^p}\leq 1}\mid \int fg\mid$.
+
+(ii) If $g$ is integrable on all sets of finite measure and $\sup_{\lVert f\rVert_{L^p}\leq 1 \text{, f is simple}}=\mid\int fg\mid=M<\infty$ then $\lVert g\rVert_{L^q}=M.$
+\end{lemma}
+\begin{proof}
+The first conditions simply say about the existence a priori. Note that $g$ integrable on all sets of finite measure does not necessarily imply $g\in L^q$. 
+    part (i): left direction is by Holder. Right direction is proven by considering specific functions, keeping in mind that the sign times the function is its absolute value (note about sigma finite: a space can be partitioned by finite sets: \url{https://math.stackexchange.com/questions/98965/significance-of-sigma-finite-measures}). Same spirit for part (ii).
+\end{proof}
+\item Using this we can prove that the dual of $L^p$ is $L^q$. We could directly prove in the case of finite measure. We defined a measure $\nu$ and used the absolute continuity with respect to $\mu$ (Radon-Nicodim). Then we use the above lemma. We can extend by limiting argument.
+\item Hahn-Banach theorem(page 20) has a little bit different flavor. $l$ is bounded by some $p$ satisfying certain conditions instead of asserting that $\lVert l\rVert=M$. I'll get back later (p18).
+\item Radon measure
+\item Hahn-Banach theorem
+\item Characterization of norm
+\item Bidual and weak convergence, how the topology generalizes.
+\item Homework, check uniqueness and the continuity on the boundary.
 
 
 \newpage
@@ -79,6 +96,7 @@ Complete metric (idea: continuum) space is second category ($X$ cannot be writte
 \begin{itemize}
     \item For $\mathbb{R}^n$, compact iff closed and bounded.
     \item For infinite dimensional Banach space, closed and boundedness does not imply compact: for example, consider the set of basis $S=(1,0,\dots), (0, 1, \dots), (0, 0, \dots, 1, \dots)$ with the metric $l^\infty$. This is clearly closed and bounded in this metric. But this is not compact (iff totally bounded(fail, this is a notion similar to compactness but whence not necessarily closed) and complete).
+    \item Note for completeness: it is a notion about metric not of topology. Complete space can be homeomorphic to non-complete space.
     \item Another way is to see that closed and bounded subset of infinite dimensional Banach space is "too large" from the above remark (just realize that it has uncountably many elements and infinite basis so maybe it is reasonable to think that we cannot make it compact easily as in finite dimensional space).
 \end{itemize}
 \subsection*{Completing the space}
@@ -86,8 +104,7 @@ Complete metric (idea: continuum) space is second category ($X$ cannot be writte
     Every metric space has a completion.
     \url{https://en.wikipedia.org/wiki/Complete_metric_space}
 \end{theorem}
-\begin{itemize}
-    \item Cauchy sequence is each element, where the distance is defined by the distance between the convergent points. Isometry since the constant sequence is included. Choose $\leq\frac 1i$ index for each $x^i$ (kind of diagonal).\url{https://math.stackexchange.com/questions/2019077/the-set-of-all-equivalence-classes-from-cauchy-sequences-is-complete}
+    \item Cauchy sequence is each element, where the distance is defined by the distance as $n$ goes to infinity. Isometry since the constant sequence is included. Choose $\leq\frac 1i$ index for each $x^i$ (kind of diagonal).\url{https://math.stackexchange.com/questions/2019077/the-set-of-all-equivalence-classes-from-cauchy-sequences-is-complete}
 \end{itemize}
 \subsection*{Ordinary Differential Equation}
 \begin{itemize}
@@ -101,7 +118,7 @@ Complete metric (idea: continuum) space is second category ($X$ cannot be writte
     $T=\min (T_1, L/M)$: if $L<T_1 M$, Then choose $\frac LM$ (just to be safe).
     \item Define $u_\epsilon$. $u\leq \delta$ (corresponding to difference in x coordinate), $Mh\leq \delta$ (corresponding to difference in y coordinate).
     \item Check limiting argument regarding (2.26)!
-    It is indeed easy to see when we use Lebesgue integration(via dominated convergence thm). Super useful fact: If $f$ is bounded, then $f$ is Riemann integrable iff $f$ is almost surely continuous. If $f$ is Riemann integrable, then it is same as Lebesgue integral! (\url{https://math.stackexchange.com/questions/829927/general-condition-that-riemann-and-lebesgue-integrals-are-the-same})
+    It is indeed easy to see when we use Lebesgue integration(via dominated convergence thm). Super useful fact: If $f$ is bounded, then $f$ is Riemann integrable iff $f$ is almost surely continuous. If $f$ is Riemann integrable (range $[a,b]$), then it is same as Lebesgue integral! (\url{https://math.stackexchange.com/questions/829927/general-condition-that-riemann-and-lebesgue-integrals-are-the-same})
     \item Note also $f$ does not have to be continuous on $\mathbb{R}^2$. It only has to be continuous in the domain including $R_1$.
     \item \textbf{When $f$ is Lipschitz, we do have uniqueness, which leads to Gronwall's inequality}
     \item Gronwall's inequality: if certain condition holds, corresponding inequality holds as if it is equality.
@@ -118,14 +135,15 @@ Complete metric (idea: continuum) space is second category ($X$ cannot be writte
 
 
     
-\end{itemize}
+
 \subsection*{Poisson equation with the rectangle boundary}
-Green's formula - seem to work only for half space, sphere
+\item Green's formula - seem to work only for half space, sphere
 separation of variable - does not give me appropriate formula. The best way is to just guess!
 
 For finite difference approx method, we do not include boundary in the matrix, hence $m-1\times m-1$ matrix.
 
-
+\subsection*{C(K) is complete}
+\item Do it in two steps.
 
 
 
@@ -133,28 +151,230 @@ For finite difference approx method, we do not include boundary in the matrix, h
 
 
 \subsection*{The contraction Mapping Theorem}
-\begin{itemize}
-\item Contraction map is a special case of Lipschitz function where it maps from metric space to itself and Lipschitz constant $K\leq 1$.
+
+\item Contraction map is a special case of Lipschitz function where it maps from metric space to itself and Lipschitz constant $K\leq 1$. It means we "contract" the perturbation as we impose $T$ repeatedly. 
+\item Intuition: $T(B_r (x))\subset B_{cr}(T(x))$; $f=g+Kg+K^2g+\dots$ (called Neumann series expansion), solution $f$ exists only when imposing $K$ gets smaller and smaller...so $\lim_{n\to\infty}K^n\to 0$
+
 \begin{theorem}
 Strict contraction on a complete metric space has a unique fixed point.
 \end{theorem}
 \begin{proof}
-One way to construct Cauchy sequence is to show that for $n\geq m$, $d(x_n,x_m)\leq c_{n,m}$. Uniqueness simply follows from the fact that the constant is less than $1$. That is why it needs to be "strict."
+One way to construct Cauchy sequence is to show that for $n\geq m$, $d(x_n,x_m)\leq c_{n,m}$ and let $n\to\infty$, find that this sequence is indeed Cauchy. Uniqueness simply follows from the fact that the constant is less than $1$. That is why it needs to be "strict."
 \end{proof}
-\item This is useful in dynamical system. 
-\begin{example}
-Logistic equation. $Tx=4\mu x(1-x)$ (here, $x_{n+1}=x(1-x)$). Depending on $\mu$, we have more than one fixed point.
-\end{example}
+\item Just be mindful when you apply, it should be $f_1-f_2$, not $f(x_1)-f(x_2)$
 \item
 We can solve $f(x)=0$ by recasting into $x=Tx$ (there are many ways). We know the uniqueness/existence, and we can solve this by using "iteration scheme" $x_{n+1}=Tx_n$.
 
 For example, $x^2-a=0\to x=\frac 12(x+\frac ax)$. So $Tx=\frac 12(x+\frac ax)$. Express this in the form $\lvert Tx_1-Tx_2\rvert =K\cdot\lvert x_1-x_2\rvert$. (caveat: complete space is closed, but not the other way around ($\mathbb{Q}$), $https://math.stackexchange.com/questions/6750/difference-between-complete-and-closed-set)$
+\item $$f(x)=\int^b_a k(x,y)f(y)dy+g(x)$$, Fredholm Operator.
+
+\item $-v''=f, v(0)=0, v(1)=0$ can be solved by integrating twice (integration by parts) directly. When $f\to-qv+f$, recast into the FPT.
+\item We can solve ODE $$u'(t)=f(t,u(t)), u(t_0)=u_0$$ when $f$ is globally Lipschitz continuous function (Obviously, recast into integration, use $\delta<1/C$ and cover overlapping intervals, using uniqueness). 
+
+\item Local existence theorem in 3.10, what's the difference with the previous one? In Theorem 3.10, the range of $u$ is a ball around $u_0$ so when we tried to see that $T$ maps from $X$ to $X$, we have some restriction, namely $\eta$, the distance from $t_0$, has to be less than or equal to $R/M$. As we move $t_0$ to iterate, the value of $R$ and $M$ changes. For $\eta$ being less than or equal to Lipschitz constant divided by two, and the value does not change as we move along. This is why we have $\delta=\min(T,R/M)$.
+\subsection*{Exercise}
+\item 3.7
+
+The problem here is $\sin u$ and $u'(c)$. We could just introduce the new function $v$. $v$ can be simply obtained by integration by parts. We here used the crucial fact that twice derivative of $\sin$ is $-\sin$. Before solving, always think if we can simplify the given PDE/ODE. Now in order to see if $\sin x$ is Cauchy we simply just use the subtraction of sine functions to simply just multiplication of trigonometric functions. It's then easier to simplify. (\url{https://math.stackexchange.com/questions/2016731/how-to-prove-that-sin-x-is-a-lipschitz-continuous-function-on-the-real-line})
+
+\item 3.5
+
+For matrix, in applying contraction mapping theorem, it may be useful to use $L_2$ norm instead of $L_\infty$ norm. This is the biggest singular value. Remember the fact about the existence of norm bounded by slightly greater norm than spectral radius.
+
+\item In order to use diagonal dominance, we needed to extract $a_{p,p}$, so we let WLOG infinity norm of $x$ is 1 and look at that specific element.
+
+\item 2.13
+
+\item for the case $0\leq \alpha<1$, we could just consider $c(\alpha)t^{g(\alpha)}$
+\item 2.3: In order to have continuous extension to closed set, we need to have some kind of regularity. In this case, uniform continuity is sufficient, since Cauchy sequence $x_i$ will imply that $f(x_i)$ is Cauchy sequence. We can argue as follows the continuity on the boundary. If $a$ and $b$ are close, then $a_n$ and $b_n$ are close, then $f(a_n)$ and $f(b_n)$ are close, so $f(a)$ and $f(b)$ are close. 
+\item Compact set in a metric space has convergent sub-sequence. Sometimes it is useful to construct non-convergent sub-sequence in order to show that the assumption is wrong (for example $x_n\not\to x$)
+\item (Ex 5.10) I'm not sure how to use Ascoli-Arzela here. Equi-continuity seems too constrained.
+\subsection*{Banach Space}
+\item $C^k$ norm is a Banach space with respect to the $C^k$ norm.
+\item Sobolev space is Banach space.
+\subsection*{Basis}
+\item Schauder basis(exists sum with unique choice of scalars), Hamel basis(or algebraic basis, maximal linearly independent set of vectors): how do we know that these two are different?
+\item In page 118, we talked about Hamel basis of $C([0,1])$ which is an extension of the set of monomials. We can construct (sum of coefficient of monomials $x^n$ multiplied by $n$) a discontinuous linear functional (since unbounded) on $C([0,1])$.
+
+\subsection*{Holder}
+\item Young's inequality intuition: $$ab\leq\int ^a_0 f(x)dx+\int^b_0 f^{-1}(x)dx$$ where $f$ is strictly increasing function. Put $f(x)=x^{p-1}$
+
+\item For Minkowski, use the fact that $p'(p-1)=p$. In order to use this, we need to maybe try to bound exponent as $p$ or $p-1$ so we can use Holder.
+
+\item Proof that $L^p$ is Banach: identify the limit pointwise. Show that the identified series is in $l^p$. Now sho that $x^{(k)}\to y$ in $l^p$ sense (just use the fact that $\sum \lim_{l\to\infty}\leq\limsup_{l\to\infty}\sum$ where $\sum$ is finite for the first one).
+\subsection*{Open mapping theorem, closed mapping theorem}
+\item Open mapping theorem: onto, bounded, Banach spaces, then the inverse is continuous (bounded).
+\begin{proof}
+First reformulate in terms of ball. Use the fact that $Y$ is complete (and Baire Category theory) and express in terms of countably many unions of balls. Specify one interior point. Play with it to show the claim, but using closeness (due to Baire Category).
+
+Now we need to prove $T(B_X (1))\supset B_Y(1/2)$ using the fact that $\bar{T(B_X(2^{-k}))\supset B_Y(2^{-k})}$. We pick a point $y\in B_Y(1/2)$ and construct a Cauchy sequence in $Y$ so it converges to zero. Also we use continuity of $T$ and the completeness of $X$, when we consider $y-T(x_1)-\dots-T(x_k)\in B_Y(1/2^{k+1})$.
+\end{proof}
+\item Two corollaries: Two Banach spaces 1) if one norm dominates the other, then two norms are equivalent. 2)Two Banach spaces with the same Cauchy limits (can be different), then two norms are equivalent (use part 1) on $\lVert\cdot\rVert_1+\lVert\cdot\rVert_2$). 
+\item $T^{-1}$ in page 13 does not work out.
+\item closed graph theorem: $T$ is closed iff $T$ is bounded, using the fact that closed set of complete space is complete (for nonlinear $T$, we demand $Y$ be compact,\url{https://math.stackexchange.com/questions/45227/the-closed-graph-theorem-in-topology}).
+\item $T$ bounded from Banach to Banach. Bounded from below iff range is closed and one-to-one.
+\item if Bounded below, then unique solution! (similar to coercivity)
+\subsection*{Finite dimensional Banach Spaces}
+\item Lemma 5.32: continuity because the element in the domain controls the outcome. Consider cube, where the sum of all elements is one, and construct a map $(x_1,\cdots,x_n)\mapsto\lVert f((x_1,\cdots,x_n))\rVert$.
+\item \textbf{Finite-dimensional normed linear space is a Banach space}: how did we use Lemma 5.32? well if we have $m\sum_{i=1}^n \mid x_i\mid\leq \lVert x\rVert\leq M\sum^n_{i=1}\mid x_i\mid$, obviously we can bound each element. We use inequality to see convergence of the Cauchy sequence. Since each element is Cauchy (using left inequality), we can find the actual $y$, and the right inequality shows the convergence of the norm, using the convergence of each element.
+\item We can also use Lemma 5.32 to show that linear operator on a finite dimensional linear space is bounded.
+\item We can also show the equivalence of two norms by leveraging two inequalities.
+\subsection*{Bounded Operator}
+\item Definition of uniform convergence.
+\item $K_n$ acting on $f(x)\in C([0,1])$. We can normalize $f$ so its maximum is $1$. We find that $\lVert K_n\rVert=\max_{x\in [0,1]}\{\int^1_0\mid k_n (x,y)\mid dy\}$.
+\item Proof that $B(X,Y)$ is complete, when $Y$ is Banach: we use here the fact that Cauchy sequence is bounded. Use the property of operator norm to remove the dependence on $x$ of the index $N_\epsilon$.
+\item Check again continuous function and $l^p$ cases, similar!
+\subsection*{compact operator}
+\item Image of bounded set is pre-compact. In terms of sub-sequence, it does not need to converge to the image, but has got to converge in some point in $Y$.
+\item Note that in metric space, limit point compact(infinite subset has a limit point), compact, and sequentially compact are all the same.
+\item Check: it is two sided ideal of $B(X)$, uniform limit is compact, finite dimensional range is always compact.
+\item Many compact operator can be approximated by finite rank operators. When we think of finite rank operator, it is important to think about the equivalence of norms, so we can use Bolzano-Weierstrass theorem (compactness iff closed and bounded, interesting read \url{https://math.stackexchange.com/questions/109733/are-two-norms-equivalent-if-they-induce-the-same-topology-on-a-vector-space}).
+\item Limit of compact operator is compact: subsequence of subsequence(identify the sequence) and use the triangle inequality(have to use the uniform convergence).
+\item Strong does not imply uniform convergence. Example: infinite dimensional projection, $P_n\to I$ strongly, but not uniformly.
+\item $\int_0^1 \sin(n\pi x)f(x)dx$ converges strongly to $0$ ("averaging" effect).
+\item Norm convergent, absolutely convergent.
+\item some discussion about exponential of an operator, identifying three properties, abelian group structure, and uniformly continuous group.
+\item This is for linear equations!!
+\subsection*{Approximation Scheme}
+\item satisfy $Au=f$ and $Au_\epsilon=f_\epsilon$.
+\item $f$ is given. $f_\epsilon$ may or may not converge to $f$. $A_\epsilon$ is our object of interest. 
+\item Key inequality: $$\lVert u-u_\epsilon\rVert\leq A_\epsilon^{-1}(\lVert A_\epsilon u-Au\rVert +\lVert f-f_\epsilon\rVert).$$
+\subsection*{Dual}
+\item Topological(continuous)/algebraic(including non-continuous, much larger) dual space.
+\subsection*{Hw}
+\item (5.15 b): it is not clear to me to use ODE method; I don't know the solution is unique
+\item Useful theorem: 
+$$y'(t)=f(t,y(t)), y(t_0)=y_0$$
+If we have a nice regularity for $f$, then uniqueness/local existence holds.
+\url{https://en.wikipedia.org/wiki/Picard%E2%80%93Lindel%C3%B6f_theorem}
+\item Use commutativity of $[A,B]$ and $A,B$?
+\item Whence sine function, converting to ODE is useful. Even when we try to get Kernel, we can somehow utilize the range (in this sense sine function is special).
+\item Exercise 5.6: what does it have to do with subspace? well we are concerned with one specific element! This says that weak derivative is unique.
+\item In order to show that it is compact operator, Ascoli-Arzela can be useful. 
+\item Exercise 12.15: $a<b$ does not mean that $x^a<x^b$. How can we rectify it?
+\subsection*{Hahn-Banach}
+\item "It is possible to maintain boundedness of linear functional by suitable extension to the original $X$."
+\item bidual, $F_x (\phi)=\phi(x)$.
+\item this shows that weak convergence is unique.
+\item If $X=X^{**}$, we call that $X$ is reflexive.
+\item weak convergence (for $X$), weak star convergence (for dual space, $\phi_n (x)\to\phi(x)$ as $n\to\infty$ for every $x\in X$).
+\item $X^*$ closed unit ball in $X^*$ is weak star compact (Analogue of Heine-Borel).
+\item Weak topology on $X^*$: the weakest(coarsest) topology on $X^*$ making all maps $<x,\cdot>:X^*\to \mathbb{R}$ continuous. In other words, we choose specific linear functional corresponding to the original space.
+\item Radon measure: measure on a Hausdorff topological space that is finite on compact set, inner regular (compact sets), and outer regular (open sets)
+\item If we set continuous function as a test function, we get a nice result. 
+\item Dual of continuous function is Radon measure. Well, measure can be viewed as a linear functional. 
+\item Shouldn't it be $\phi_n$? What does $b$ stand for? When we say the dual is a function, we view it as a "test function." In the end, these are isomorphism as a vector space, due to one to one correspondence and the homogeneous norm. 
+\item The dual of functional space does not have to be functional space (vector space). Can be identified as a test measure. 
+\url{https://math.stackexchange.com/questions/1858615/what-is-actually-the-standard-definition-for-radon-measure}.
+\subsection*{Measure theory}
+\item Definition of measurable (inverse is in $X$), $\sigma$-algebra. 
+\item Random variable is a measurable function whose codomain is real (for example we could use extended real number).
+\item Enough to simply verify generating set when we prove measurability.
+\item Countability of $\int A$ is by just using the same old trick (move from characteristic to simple to positive measurable function).
+\item Proving non-measurability is hard. 
+\item $f_n$ measurable converges pointwise to $f$ then $f$ is measurable.
+\item $f_n$ measurable $f_n$ converges pointwise a.e. to $f$ AND ($X, A, \mu$) is complete then $f$ is measurable.
+\item We define $\{A_{N,k}=\frac{k-1}{2^N}\leq f(x)<\frac k{2^N}\}$
+\item $\phi_n(x)=\sum\frac{k-1}{2^N}\chi_{A_{n,k}} (x)$
+\item Positive measurable function can be approximated by increasing simple functions.
+\item Can approximate separately as well for negative and positive.
+\item $\delta_{x_0}$ (check)
+\item Counting measure $f:\mathbb{N}\to\mathbb{R}$.
+\item Counter-example: height $n$ and interval $\frac 1n$.
+\item Monotonic convergence theorem is also called Paul-Levy.
+\item Fatou's lemma think of it as losing mass (\url{https://math.stackexchange.com/questions/1890542/intuitively-understanding-fatous-lemma}).
+\item Question: Is $I(t)=\int f(x,t)d\mu (x)$ differentiable?
+\item $f$ is differentiable in $x$, integrable in $t$, and dominated uniformly in $x$ by $g(x)$.
+\item Use $\frac{\phi(t+\frac 1n)-\phi(t)}{\frac 1n}$.
+\item Constructing product space is trivial, but making a measure on it needed work.
+\item Fubini's theorem: 1) integrable on product measure is same as (iff) integrate one and then the other.
+
+2) When integrable, integral value is exchanged.
+\item Wiggly $L^p$ (too big) and $L^p(1\leq p\leq\infty)$ are different. Latter is only up to measure zero.
+\item Now $\lVert\cdot\rVert=0$ implying $0$ is not trivial.
+\item Use approximation of the function $\phi_n\geq 0$, sandwich with $\int\mid f\mid^p\d\mu=0$, and use the fact the integrand is zero almost everywhere (need some work, but essentially sets are measure zero or the value $c_i$ is zero).
+\item For the proof of dominated convergent theorem, we need some lemma about Cauchy: $\{f_n\} cauchy$ iff if the absolute sum of norm is finite then the finite sum converges (I'm not sure).
+\item Idea of the proof of MCT: One direction is direct. The other direction is by choosing $c<1$, define $E_n$ with it, and fix the simple function. Take the infimum on an appropriate inequality (p319 Rudin).
+\item Fatou can be proved by using MCT on $\inf \{f_n,f_{n+1},\dots\}$
+\item DCT can be proved by using Fatou on $f+g$ and $-f+g$.
+\item $L^p$ function can be approximated by simple functions in $L^p$ sense.
+\item $1\leq p<\infty$ $L^p(\mathbb{R}^n)$ is separable (countable dense set).
+\item $C^\infty_C$ is dense in $L^p(\mathbb{R}^n)$.
+\item Polynomial with rational to real coefficients. Approximate compactly supported continuous function. 
+\item $L^\infty$ is not separable (too many variations, cannot approximate by some smooth functions).
+\item Of course, it does not hold that $\lVert f_n\rVert-\lVert f\rVert\to 0$ then $\lVert f_n-f\rVert\to 0$ (just plug in $-f$). But the other way around holds.
+\item Next class: Holder, Jensen, Chebyshev
+\subsection*{Differentiation under integration}
+\item The idea of the proof for Riemann integration: 1) mean value theorem and 2) uniform convergence; (d)(derivative continuous uniformly in x) says that $\psi^t$ converges uniformly to $(D_2\phi)^s$.
+\item Riemann integrable in $x$ says that it is "small enough." Uniformly continuity in $t$ says that it is "regular enough."
+\item Same idea of using mean value theorem for Lebesgue case.
+\item Often times we get the integral by formulating it into differential equation. 
+\subsection*{$L^p$ theory}
+\item $L^p\subset L^q$ comes from the fact that $p$ and $q$ should both be greater than one.
+\item We did not say $L^p$ is the same as $L^q$. The dual is!
+\item I'm not understanding the statement, "the dual is bigger than the original space."
+\item $L^\infty$ does not have to be regular, so maybe that's why the dual of $L^\infty$ is greater than $L^1$?
+\item The terminology of absolute continuity comes from the notion of "control." \url{https://en.wikipedia.org/wiki/Absolute_continuity}
+
+\item Simple functions are dense in $L^p$ space. 
+
+\item For the proof: We are given $l$. From finite measure proof, we can consider $E_n$ and $g_n$. We know that there exists $g$ such that $g_n\to g$, and this is integrable on all sets of finite measure. This is why we used (ii). We do not a priori know that it is in $L^q$.
+\item Definition of total variation of the signed measure: \url{https://en.wikipedia.org/wiki/Total_variation}; roughly speaking, it is the size of the measure.
+\item Dual of $L^\infty$ is not $L^1$. It is a ba space(Banach space of finitely additive measure absolutely continuous with respect to $\mu$ whose norm is defined by total variation, \url{https://math.stackexchange.com/questions/47395/the-duals-of-l-infty-and-l-infty}), there is a natural embedding $d\nu=fd\mu$ when $f$ is $L^1$ function.
+\item Bounded sequence that does not have a weakly convergent sub-sequence in $L^1([0,1])$. Well, clearly we are concerned about weak star compactness so we can clearly find this. 
+\item Does reflexivity imply Banach-Alaoglu theorem for the original space?
+\subsection*{Density}
+\item simple is dense in $L^p (1\leq p\leq \infty)$. We simply use simple function approximation.
+\item $L^p(\mathbb{R}^n)$ is separable for $p\in [1,\infty)$. Simply use cube with rational indexes. Same idea in the problem set that measure is a countable union of intervals.
+\item compactly supported continuous function is dense in $L^p(\mathbb{R}^n)$, not including $\infty$: suffies to approximate characteristic function of a bounded measurable set $A$ by continuous compactly supported function. We can use theorem 12.10 ($K\subset A\subset G$ with $\lambda(G\ K)<\epsilon^p$). In order to generalized to compactly supported smooth functions, we need to use approximate identity to smooth it out.
+\item how do you show non-density (wrt $C[0,1]$) and non-separability? (in particular $L^\infty[0,1]$).
+\item 
 
 
-\item We can also use contraction mapping theorem in Fredholm operation. The key here is that $T$ can act on a function.
-\item Then the theorem 3.3 gives some result to the following discussion on PDE
+
+
+
+
+\subsection*{Counting measure}
+\item Interchanging of infinite sum is really a result of monotonic convergence theorem. \url{https://math.stackexchange.com/questions/1799766/relation-between-counting-measure-and-tonelli-theorem}
+
+\subsection*{Zorn's Lemma, Axiom of Choice}
+\item Discussion on axiom of choice: \url{https://math.stackexchange.com/questions/868787/dual-of-l-infty-is-not-l1}
+
+\subsection*{Inequalities}
+\item $<f>$ is like a mean value, $\frac 1{\mu(x)}\int_x f\mu$
+\item Jensen's inequality in terms of expected value. We just expressed the lower bounded property and integrate over $X$ (page 356). 
+\item Chebyshev's inequality; take an inequality on the obvious direction. This gives the upper bound of measure and the lower bound of $L^p$ space. We kind of lose a lot.
+\item Young's inequality: convolution is $L^r$ where $\frac 1p+\frac1q=1+\frac1r$.
+\item Convolution is like pseudo-product; when $f,g\in L^1$; give me an algebra structure.
+\item Another way to view convolution is a weighted average when the mass of $g$ is one and is always positive. In general, weighted sum.
+\item This distinction would not matter when we investigate asymptotic behavior, smoothness, etc.
+\item So, be careful when we do the change of variable (if it's after or before Fubini): $\int[\int f(y)g(x-y)dy]dx=\int[\int f(y)g(x-y)dx]dy=[\int g(z)dz][\int f(y)dy]$
+\item $f,g\in L^2$ to $L^\infty$. 
+\item Always check if we can simplify(without loss of generality) when we prove the bound!
+\item The idea of the general case is to consider conjugate and use generalized Holder inequality. We want to kill by constructing $\lVert f\rVert_p$ and $\lVert f\rVert_q$ somehow.
+\item Delta function is like a kernel of identity operator. This says that it is "morally" $L^1$.
+\subsection*{Hilbert Space}
+\item Diagonalization of the operator is our final goal.
+\item Basis for Banach space is not very useful. Rule of finding coefficient should come from orthogonality.
+\item Antilinear with respect to the first variable. Change the position conjugates.
+\item There is a natural norm induced by an inner product. This is not necessarily complete.
+\item Complete pre-Hilbert space is Hilbert space. This is Banach.
+\item Fact: Define $(f,g)=\int^b_a fg dx$. Prehilbert space defined for continuous function; pre-Hilbert completion is $L^2([a,b])$.
+\item Generalization: $C^k([a,b])$ norm defined by $\sum_{j=0}^k\int_a^b \bar f^{(j)}(x)g^{(j)}(x)dx$; pre-Hilbert completion is $H^k$.
+\item Cauchy-Schwarz. Proof idea: use the fact that $\lVert x-\lambda y\rVert\geq 0$ and put $\mid\lambda\mid=\lVert x\rVert \lVert y\rVert^{-1}$
+\item Parallelogram law; inner product space if and only if parallelogram law holds. Define an inner product by using a norm(sum of squares divided by four). Prove that this is actually an inner product by using parallelogram law.
+\item Using this, we can prove that the space is not inner product.
+\item Natural inner product of Cartesian product is to use the sum of each coordinate. Then it is Pre-Hilbert, check! (might not only be this way though)
+
+\item $X\times X\to\mathbb{C}$ defined by inner product is continuous. Proof is by usnig $x_1+x_2-x_2=x_1$ and use Cauchy-Schwarz. This is locally Lipschiz continuous.
+
+\item Assume that we have Hilbert space. Definition of orthogonality.$A^\perp$ is a subspace. $A$ does not need to be.
+
+\item Closed linear subspace by using an idea of continuity. Similarly, kernel is a closed space.
+
+\item Projection theorem: minimum is attained for closed linear subspace of Hilbert space. This is a unique point that orthogonalizes.
+
+\item 
 \end{itemize}
-
-Compact set in a metric space has convergent sub-sequence. Sometimes it is useful to construct non-convergent sub-sequence in order to show that the assumption is wrong (for example $x_n\not\to x$)
-
 \end{document}

@@ -1,5 +1,5 @@
 \documentclass{article}
-
+\usepackage[hyphens,spaces,obeyspaces]{url}
 \usepackage{pgfplots}
 \usepackage{tikz}
 \usepackage{graphicx}
@@ -35,45 +35,38 @@
 \newtheorem{example}{Example}
 \newtheorem{remark}[example]{Remark}
 
-\title{Algorithm}
+\title{Numerical PDE}
 \author{MinSeok Song}
 \date{}
 
 \begin{document}
 \maketitle 
-\section*{Divide and Conquer (and merge)}
+\section*{Test}
 \begin{itemize}
-\item General idea: expand out or recursion tree (and show monotonicity using induction)
+\item Note that eigenvector does not change, but eigenvalue changes. Write out the matrix formulation. Use educational guess for eigenvector components. The computation does not make sense. 
 
-(example) multiplication algorithm; $T(n)=3T(n/2)+8n$
-\item Notation: $f(n)=w(g(n))$: $f(n)>g(n)$
+$$v_k=2ic_+ \sin k\xi$$ yields
+$$\sin(n-2)\xi=\lambda_0\sin (n-1)\xi$$
+but this does not give
+$$c_+\sin(n\xi)=0$$.
+\item Uniqueness tells us something about invertibility! 
+\item Coefficients sum to zero$\to$ not good!
+\item Brandle Hilbert why no polynomial?
+\item 1. Bounded because $l\leq k$.
 
-$f(n)=\Omega(g(n)):f(n)\geq g(n)$
+2. sublinear since norm.
 
-$f(n)=\Theta(g(n)): f(n)=g(n)$
+3. Annihilation since subspace is a polynomial.
 
-etc
+\item In $L^2$ sense, we get an order of $h^3$.
 
-\item Sorting algorithm: Merge sort ($T(n)=2T(n/2)+\Theta (n)$), insertion sort ($\Theta(n^2)$ in the worst case, $\Theta(n)$ on sorted inputs)
+\item $\mid v(x)\mid^2\leq\lVert v'\rVert^2$.
+\item We needed when we compare energy norm and the norm for $v'$.
+\item How did we prove that the energy norm is an inner product?
 
-\item Solving recurrences: substitution method(and induction), recursion-tree method, master method.
 
-\item Master Method
-\section*{Dynamic Programming}
 
-\item Fibonacci, 0-1 Knapsack, Matrix Chain Multiplication, Longest Common Subsequence, 
-\item
-Bottom-up iterative version - solutions have to be tabulated. (for b=0 to W and i=1 to n)
 
-Top-down recursive version - \textbf{check if solution was already computed.} (initialize everything to "?" the check using if statement), need to do memoization.
-
-\item knapsack M(b,i): capacity b, using a subset of the first i items only.
-
-(p5, lec10) what is Catalan number?
-
-\item 
 
 \end{itemize}
-
-
 \end{document}

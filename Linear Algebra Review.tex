@@ -47,7 +47,7 @@
 Let $T:V\to W$ be a linear transformation between two vector spaces. Then $Rank (T)+Nullity(T)=dim(V)$.
 (this can be easily shown by using first isomorphism theorem and splitting lemma(check))
 \begin{proof}
-Another method is to compare $Nullity(T)$ and $dim(V)$, and apply Steinitz exchange lemma to find the dimension of the image.
+Another method is to compare Nullity(T) and dim(V), and apply Steinitz exchange lemma to find the dimension of the image.
 \end{proof}
 \item Steinitz exchange lemma: use induction and exchange $u_k$ with $w_i$ for some $i\in\{w_k\dots w_n\}$ in a induction step.
 \item Why is covariance matrix positive definitie?
@@ -64,7 +64,10 @@ For the case $m_j=0$, we have $X=AZ$. $AA^T$ is called the covariance matrix. Ev
 \end{enumerate}
 \item (digression) 
 
-X is diagonalizable iff the minimal polynomial is the product of distinct $x-\lambda_i$'s. So the degree of this polynomial is equal to the number of distinct eigenvalues.
+X is diagonalizable iff the minimal polynomial is the product of distinct $x-\lambda_i$'s. So the degree of this polynomial is equal to the number of distinct eigenvalues. Also, diagonalizable iff the sum of the dimension of eigenvector is $n$.
+\item By definition the norm of $e^{-tA}$ is $e^{-t\lambda_1}$ where $\lambda_1$ is the smallest eigenvalue.
+\item We suppose that $t$ is large. We are only concerned about Eigenvalue, so either we have at least one negative eigenvalue or the matrix is positive definite.
+\item If $A$ depends on $t$: 
 
 Characteristic polynomial of a square matrix is $\det(tI-A)$. Caley-Hamilton states that every square matrix over a commutative ring satisfies its own characteristic equation (intuition: $p(A)v_j=p(\lambda_j)v_j=0$). Indeed, characteristic polynomial and minimal polynomial have the same roots over $\mathbb{C}$ (use $0=\mu_A (A)\cdot v=\mu_A (\lambda)\cdot v$). In fact, it is important to note that $f(\lambda)$ is an eigenvalue of $f(A)$.
 
@@ -76,11 +79,12 @@ Usually, we consider positive definite matrix AND symmetric matrix so eigenvalue
 \end{itemize}
 \subsection*{Positive Definite}
 \begin{itemize}
+\item Why symmetric? Because $v^T \frac{A-A^T}2 v=0$, a skew-symmetric part of matrix does not contribute to the quadratic form. Only symmetric part remains.
 \item positive definite implies eigenvalues all positive (just use the definition)
     \item Hermitian matrix is positive definite iff all its leading principal minors have positive determinant.
     \item Hermitian matrix is positive semidefinite iff all its principal minors have non-negative determinant ($https://math.stackexchange.com/questions/1831988/how-to-prove-that-a-is-positive-semi-definite-if-all-principal-minors-are-non$).
 \begin{lemma}
-Strictly diagonally dominant matrix is nonsingular.
+Strictly diagonally dominant matrix is non-singular.
 \begin{proof}
 There exists $x\neq 0$ such that $Ax=0$. Use triangle inequality.
 \end{proof}
